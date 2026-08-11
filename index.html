@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سالم الطرميسي — مصمم هويات بصرية</title>
+<title>Salem Tarmissi</title>
+<link rel="icon" type="image/svg+xml" href="images/Asset 5.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,7 +14,25 @@
     --ink: #000000;
     --paper: #ffffff;
   }
+/* Custom Scrollbar */
+  /* WebKit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
 
+  ::-webkit-scrollbar-track {
+    background: #c1d831;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #000000;
+  }
+
+  /* Firefox / Standard CSS */
+  html {
+    scrollbar-color: #000000 #c1d831;
+    scrollbar-width: auto;
+  }
   * { box-sizing: border-box; }
 
   html { 
@@ -57,7 +76,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: min(100vw, 1500px);
+    width: min(130vw, 1600px);
     height: auto;
     opacity: 0.28;
     pointer-events: none;
@@ -505,7 +524,7 @@
 
     /* LARGE BACKGROUND GIF */
     .hero-bg-gif {
-      width: 250vw !important;
+      width: 320vw !important;
       max-width: none !important;
       top: 50%;
       left: 50%;
@@ -709,7 +728,7 @@
       <img src="images/rowad.png" alt="Rowad Logo" class="overlay-img">
     </div>
     
-   <!-- CARD B: Atyaf -->
+    <!-- CARD B: Atyaf -->
     <div class="work-card b">
       <img src="images/realestock.png" alt="Real Estate Stock" class="stock-img">
       <video class="card-video" autoplay loop muted playsinline preload="auto">
@@ -796,7 +815,7 @@
   // Translations dictionary
   var translations = {
     ar: {
-      title: "سالم الطرميسي — مصمم هويات بصرية",
+      title: "Salem Tarmissi",
       nav_work: "أعمالي",
       nav_about: "عني",
       nav_contact: "تواصل",
@@ -813,7 +832,7 @@
       footer_cta: "هويتك الجديدة<br>بإنتظارك"
     },
     en: {
-      title: "Salem Tarmissi — Visual Identity Designer",
+      title: "Salem Tarmissi",
       nav_work: "Work",
       nav_about: "About",
       nav_contact: "Contact",
