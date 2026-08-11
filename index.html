@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سالم الطرميسي — مصمم هويات بصرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #c1d82f;
+    --ink: #000000;
+    --paper: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { 
+    scroll-behavior: smooth; 
+    font-size: 24px; 
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    direction: rtl;
+    text-align: right;
+    overflow-x: hidden;
+  }
+
+  html[dir="ltr"] body {
+    direction: ltr;
+    text-align: left;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  img, video { max-width: 100%; height: auto; display: block; }
+
+  /* ---------- HERO WRAPPER ---------- */
+  .hero-wrapper {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(20px, 3.5vw, 36px) clamp(24px, 8vw, 84px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-gif {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(100vw, 1100px);
+    height: auto;
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header, .hero-top, .hero-bottom {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ---------- NAV DESKTOP ---------- */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(21px, 3vw, 42px);
+    font-size: clamp(18px, 1.8vw, 22px);
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: clamp(21px, 3vw, 42px);
+  }
+
+  .nav a {
+    opacity: 0.85;
+    transition: opacity .2s ease;
+  }
+
+  .nav a:hover { opacity: 1; }
+
+  .nav .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12px;
+  }
+
+  .nav .logo-container img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* HAMBURGER BUTTON (Mobile Only) */
+  .mobile-nav-header {
+    display: none;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: var(--ink);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* MOBILE MENU OVERLAY */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu-overlay a {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  /* ---------- HERO HEADLINES ---------- */
+  .hero-top {
+    margin-top: clamp(0px, 0vh, 0px);
+  }
+
+  .hero-bottom {
+    margin-top: auto;
+    margin-bottom: clamp(10px, 2vh, 30px);
+  }
+
+  .hero-line1 {
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.08;
+    font-size: clamp(52px, 10vw, 126px);
+    text-align: right;
+  }
+
+  .hero-line2 {
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.08;
+    font-size: clamp(52px, 10vw, 126px);
+    text-align: left;
+  }
+
+  html[dir="ltr"] .hero-line1 { text-align: left; }
+  html[dir="ltr"] .hero-line2 { text-align: right; }
+
+  /* ---------- ABOUT SECTION ---------- */
+  .about {
+    width: 100%;
+    padding: 120px 36px 120px;
+  }
+
+  .about-container {
+    width: 100%;
+    max-width: 1650px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 84px;
+    align-items: center;
+  }
+
+  html[dir="ltr"] .about-container {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .bio p {
+    font-size: clamp(22px, 2.3vw, 31px);
+    line-height: 1.65;
+    font-weight: 500;
+    margin: 0;
+    color: #000;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+
+  .software {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .software h3 {
+    font-size: clamp(28px, 3vw, 45px);
+    font-weight: 800;
+    margin: 0 0 24px 0;
+    color: #000;
+  }
+
+  .app-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .app-icon {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    transition: transform .15s ease;
+    flex: 1;
+    max-width: 108px;
+  }
+
+  .app-icon img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .app-icon:hover { transform: scale(1.08); }
+
+  .app-icon.shake {
+    animation: shake .45s ease;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-9px) rotate(-2deg); }
+    40% { transform: translateX(9px) rotate(2deg); }
+    60% { transform: translateX(-6px) rotate(-1deg); }
+    80% { transform: translateX(6px) rotate(1deg); }
+  }
+
+  .signature-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  .signature-box img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    display: block;
+  }
+
+  /* ---------- PORTFOLIO ---------- */
+  .portfolio {
+    padding: clamp(36px, 9vw, 84px);
+    padding-top: 40px;
+  }
+
+  .portfolio h2 {
+    font-size: clamp(40px, 8vw, 81px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin: 0 0 36px;
+    white-space: nowrap;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "b a"
+      "d c";
+    gap: 36px;
+  }
+
+  .work-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 1 / 1;
+  }
+
+  .work-card.a { grid-area: a; }
+  .work-card.b { grid-area: b; }
+  .work-card.c { grid-area: c; }
+  .work-card.d {
+    grid-area: d;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+  }
+
+  .stock-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: grayscale(100%);
+    transition: opacity 0.45s ease;
+  }
+
+  .card-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    z-index: 2;
+  }
+
+  .work-card:hover .card-video,
+  .work-card.touch-active .card-video {
+    opacity: 1;
+  }
+
+  .work-card .overlay-img {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    max-width: 330px;
+    max-height: 330px;
+    object-fit: contain;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(0) invert(1);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease;
+  }
+
+  .work-card:hover .overlay-img,
+  .work-card.touch-active .overlay-img {
+    transform: scale(1.15);
+    filter: none;
+  }
+
+  .work-card.d img {
+    max-width: 360px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(60px, 9vw, 120px) clamp(30px, 8vw, 84px);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .footer-bg-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(85%, 975px);
+    height: auto;
+    max-height: 80%;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 45px;
+    max-width: 1800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-block {
+    text-align: inherit;
+  }
+
+  .footer-left .name {
+    font-weight: 800;
+    font-size: clamp(30px, 3.3vw, 39px);
+    margin: 0 0 6px;
+    color: var(--bg);
+  }
+
+  .footer-left .title-text {
+    margin: 0;
+    font-size: clamp(21px, 2.1vw, 25.5px);
+    font-weight: 500;
+    color: var(--bg);
+  }
+
+  .footer-left .links {
+    margin-top: 36px;
+    font-weight: 700;
+    font-size: clamp(22.5px, 2.25vw, 27px);
+    color: var(--bg);
+  }
+
+  .footer-left .links a {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+
+  .footer-right h4 {
+    margin: 0 0 24px;
+    font-size: clamp(42px, 6.3vw, 72px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--bg);
+  }
+
+  .footer-right p {
+    margin: 0;
+    font-size: 21px;
+    opacity: 0.85;
+    color: var(--paper);
+  }
+
+  /* ========================================================= */
+  /* ---------- MOBILE SPECIFIC STYLES (≤ 768px) ------------ */
+  /* ========================================================= */
+  @media (max-width: 768px) {
+    
+    .nav { display: none; }
+    
+    .mobile-nav-header {
+      display: flex;
+    }
+
+    html[dir="ltr"] .mobile-nav-header {
+      flex-direction: row-reverse;
+    }
+
+    .mobile-nav-header .logo-container img {
+      height: 38px;
+    }
+
+    .hero-wrapper {
+      padding: 16px 16px 28px 16px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* LARGE BACKGROUND GIF */
+    .hero-bg-gif {
+      width: 250vw !important;
+      max-width: none !important;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.35;
+    }
+
+    /* TOP TITLE DIRECTLY BELOW HEADER WITH SLIGHT MARGIN */
+    .hero-top {
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+
+    .hero-line1 {
+      font-size: clamp(48px, 13.5vw, 84px);
+      line-height: 1.02;
+      text-align: right;
+      letter-spacing: -1px;
+    }
+
+    /* BOTTOM TITLE PUSHED DOWN TO THE BOTTOM MARGIN */
+    .hero-bottom {
+      margin-top: auto;
+      margin-bottom: 16px;
+    }
+
+    .hero-line2 {
+      font-size: clamp(48px, 13.5vw, 84px);
+      line-height: 1.02;
+      text-align: left;
+      letter-spacing: -1px;
+    }
+
+    /* ABOUT SECTION MOBILE */
+    .about {
+      padding: 48px 20px;
+    }
+
+    .about-container {
+      grid-template-columns: 1fr !important;
+      gap: 36px;
+    }
+
+    .bio p {
+      font-size: 19px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .software {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* PORTFOLIO GRID MOBILE */
+    .portfolio {
+      padding: 20px;
+      padding-top: 30px;
+    }
+
+    .portfolio h2 {
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
+
+    .work-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "a"
+        "b"
+        "c";
+      gap: 18px;
+    }
+
+    .work-card.d {
+      display: none;
+    }
+
+    .work-card .overlay-img {
+      max-width: 130px;
+      max-height: 130px;
+    }
+
+    /* FOOTER MOBILE */
+    footer {
+      padding: 48px 20px;
+    }
+
+    .footer-inner {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 32px;
+    }
+
+    .footer-right h4 {
+      font-size: 38px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-wrapper">
+  <!-- BACKGROUND GIF -->
+  <img src="images/3dgifmaker89467.gif" alt="" class="hero-bg-gif">
+
+  <!-- NAV BLOCK -->
+  <header>
+    <!-- Desktop Navigation -->
+    <nav class="nav">
+      <div class="nav-group">
+        <a href="#portfolio" data-i18n="nav_work">أعمالي</a>
+        <a href="#about" data-i18n="nav_about">عني</a>
+      </div>
+
+      <div class="logo-container">
+        <a href="#"><img src="images/logo.svg" alt="Logo"></a>
+      </div>
+
+      <div class="nav-group">
+        <a href="#" class="lang-toggle">English</a>
+        <a href="#contact" data-i18n="nav_contact">تواصل</a>
+      </div>
+    </nav>
+
+    <!-- Mobile Header Bar -->
+    <div class="mobile-nav-header">
+      <div class="logo-container">
+        <a href="#"><img src="images/logo.svg" alt="Logo"></a>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <a href="#portfolio" class="mobile-link" data-i18n="nav_work">أعمالي</a>
+    <a href="#about" class="mobile-link" data-i18n="nav_about">عني</a>
+    <a href="#contact" class="mobile-link" data-i18n="nav_contact">تواصل</a>
+    <a href="#" class="lang-toggle">English</a>
+  </div>
+
+  <!-- TOP HEADLINE -->
+  <div class="hero-top">
+    <h1 class="hero-line1" data-i18n="hero_line1">أصمم هويات<br>بصرية</h1>
+  </div>
+
+  <!-- BOTTOM HEADLINE -->
+  <div class="hero-bottom">
+    <h1 class="hero-line2" data-i18n="hero_line2">وأحول<br>فكرتك إلى هوية</h1>
+  </div>
+</div>
+
+<!-- ABOUT SECTION -->
+<section class="about" id="about">
+  <div class="about-container">
+    <div class="bio">
+      <p data-i18n="bio_1">أهلاً، أنا سالم، مصمم هويات بصرية أؤمن أن التصميم مو مجرد شكل جميل، بل فكرة تتحول إلى شيء يُرى ويُتذكر.</p>
+      <p data-i18n="bio_2">أركز على بناء الهويات البصرية وتطوير المفاهيم من الفكرة الأولى إلى نظام بصري متكامل، من الشعارات والعناصر البصرية إلى التطبيقات والمحتوى.</p>
+      <p data-i18n="bio_3">أحب أن أجد الفكرة التي تجعل العلامة مختلفة، ثم أبني حولها تصميمًا واضحًا، متناسقًا، وله سبب.</p>
+    </div>
+
+    <div class="software">
+      <h3 data-i18n="software_title">خبرتي في البرامج</h3>
+      <div class="app-row">
+        <button class="app-icon" data-app aria-label="After Effects">
+          <img src="images/aftereffects.png" alt="After Effects">
+        </button>
+        <button class="app-icon" data-app aria-label="Premiere Pro">
+          <img src="images/premiere.png" alt="Premiere Pro">
+        </button>
+        <button class="app-icon" data-app aria-label="Illustrator">
+          <img src="images/illustrator.png" alt="Illustrator">
+        </button>
+        <button class="app-icon" data-app aria-label="Photoshop">
+          <img src="images/photoshop.png" alt="Photoshop">
+        </button>
+      </div>
+      <div class="signature-box">
+        <img src="images/signature.png" alt="Signature">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO SECTION -->
+<section class="portfolio" id="portfolio">
+  <h2 data-i18n="portfolio_title">أعمـالـــــــــــــــي</h2>
+  <div class="work-grid">
+    
+    <!-- CARD A: Rowad -->
+    <div class="work-card a">
+      <img src="images/bsnisstock.png" alt="Business Stock" class="stock-img">
+      <video class="card-video" autoplay loop muted playsinline preload="auto">
+        <source src="videos/patternrowad.mp4" type="video/mp4">
+      </video>
+      <img src="images/rowad.png" alt="Rowad Logo" class="overlay-img">
+    </div>
+    
+    <!-- CARD B: Atyaf (Redirects to atyaf.html) -->
+    <a href="atyaf.html" class="work-card b">
+      <img src="images/realestock.png" alt="Real Estate Stock" class="stock-img">
+      <video class="card-video" autoplay loop muted playsinline preload="auto">
+        <source src="videos/patternatyaf.mp4" type="video/mp4">
+      </video>
+      <img src="images/atyaf.png" alt="Atyaf Logo" class="overlay-img">
+    </a>
+    
+    <!-- CARD C: Ufuq -->
+    <div class="work-card c">
+      <img src="images/archstock.png" alt="Architecture Stock" class="stock-img">
+      <video class="card-video" autoplay loop muted playsinline preload="auto">
+        <source src="videos/ufuqpattern.mp4" type="video/mp4">
+      </video>
+      <img src="images/ufuq.png" alt="Ufuq Logo" class="overlay-img">
+    </div>
+
+    <!-- CARD D: Brand Logo (Static) -->
+    <div class="work-card d">
+      <img src="images/logo.svg" alt="Logo Project">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER SECTION -->
+<footer id="contact">
+  <img src="images/logog.svg" alt="" class="footer-bg-logo">
+
+  <div class="footer-inner">
+    <div class="footer-block footer-left">
+      <p class="name" data-i18n="footer_name">سالم الطرميسي</p>
+      <p class="title-text" data-i18n="footer_title">مصمم هويات بصرية</p>
+      <p class="links">
+        <a href="#">Instagram</a> • <a href="#">Behance</a> • <a href="#">Email</a>
+      </p>
+    </div>
+
+    <div class="footer-block footer-right">
+      <h4 data-i18n="footer_cta">هويتك الجديدة<br>بإنتظارك</h4>
+      <p>© 2026 Salem Tarmissi</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile Hamburger Toggle
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+
+  hamburgerBtn.addEventListener('click', function() {
+    mobileMenu.classList.toggle('active');
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      mobileMenu.classList.remove('active');
+    });
+  });
+
+  // Smooth anchor scroll
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = link.getAttribute('href');
+      if(id.length > 1){
+        var target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+
+  // Shake animation on Adobe app icon click
+  document.querySelectorAll('[data-app]').forEach(function(icon){
+    icon.addEventListener('click', function(){
+      icon.classList.remove('shake');
+      void icon.offsetWidth;
+      icon.classList.add('shake');
+      setTimeout(function(){ icon.classList.remove('shake'); }, 500);
+    });
+  });
+
+  // Translations dictionary
+  var translations = {
+    ar: {
+      title: "سالم الطرميسي — مصمم هويات بصرية",
+      nav_work: "أعمالي",
+      nav_about: "عني",
+      nav_contact: "تواصل",
+      lang_btn: "English",
+      hero_line1: "أصمم هويات<br>بصرية",
+      hero_line2: "وأحول<br>فكرتك إلى هوية",
+      bio_1: "أهلاً، أنا سالم، مصمم هويات بصرية أؤمن أن التصميم مو مجرد شكل جميل، بل فكرة تتحول إلى شيء يُرى ويُتذكر.",
+      bio_2: "أركز على بناء الهويات البصرية وتطوير المفاهيم من الفكرة الأولى إلى نظام بصري متكامل، من الشعارات والعناصر البصرية إلى التطبيقات والمحتوى.",
+      bio_3: "أحب أن أجد الفكرة التي تجعل العلامة مختلفة، ثم أبني حولها تصميمًا واضحًا، متناسقًا، وله سبب.",
+      software_title: "خبرتي في البرامج",
+      portfolio_title: "أعمـالـــــــــــــــي",
+      footer_name: "سالم الطرميسي",
+      footer_title: "مصمم هويات بصرية",
+      footer_cta: "هويتك الجديدة<br>بإنتظارك"
+    },
+    en: {
+      title: "Salem Tarmissi — Visual Identity Designer",
+      nav_work: "Work",
+      nav_about: "About",
+      nav_contact: "Contact",
+      lang_btn: "عربي",
+      hero_line1: "I Design Visual<br>Identities",
+      hero_line2: "And Turn Your<br>Idea Into Reality",
+      bio_1: "Hello, I'm Salem, a visual identity designer who believes that design isn't just about good looks—it's an idea transformed into something memorable.",
+      bio_2: "I focus on building brand identities and concepts from the initial idea into a cohesive visual system, from logos to collateral and content.",
+      bio_3: "I love finding the unique angle that sets a brand apart, then creating a clear, purposeful, and harmonized design around it.",
+      software_title: "Software Expertise",
+      portfolio_title: "MY WORK",
+      footer_name: "Salem Tarmissi",
+      footer_title: "Visual Identity Designer",
+      footer_cta: "Your New Brand<br>Awaits You"
+    }
+  };
+
+  var currentLang = 'ar';
+
+  document.querySelectorAll('.lang-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      
+      document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+      document.documentElement.setAttribute('lang', currentLang);
+      document.title = translations[currentLang].title;
+
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          el.innerHTML = translations[currentLang][key];
+        }
+      });
+
+      document.querySelectorAll('.lang-toggle').forEach(function(b) {
+        b.textContent = translations[currentLang].lang_btn;
+      });
+
+      mobileMenu.classList.remove('active');
+    });
+  });
+
+  // Force video playback and tap toggle for touch screens
+  document.querySelectorAll('.work-card').forEach(function(card) {
+    var video = card.querySelector('video');
+    
+    if (video) {
+      video.play().catch(function(e) {});
+    }
+
+    card.addEventListener('click', function() {
+      var isAlreadyActive = card.classList.contains('touch-active');
+      document.querySelectorAll('.work-card').forEach(function(c) {
+        c.classList.remove('touch-active');
+      });
+      if (!isAlreadyActive) {
+        card.classList.add('touch-active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
