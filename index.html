@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salem Tarmissi</title>
+<title>Atyaf — Salem Tarmissi</title>
 <link rel="icon" type="image/svg+xml" href="images/Asset 5.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,25 +14,17 @@
     --ink: #000000;
     --paper: #ffffff;
   }
-/* Custom Scrollbar */
-  /* WebKit browsers (Chrome, Safari, Edge) */
-  ::-webkit-scrollbar {
-    width: 12px;
-  }
 
-  ::-webkit-scrollbar-track {
-    background: #c1d831;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #000000;
-  }
-
-  /* Firefox / Standard CSS */
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 12px; }
+  ::-webkit-scrollbar-track { background: #c1d831; }
+  ::-webkit-scrollbar-thumb { background: #000000; }
+  
   html {
     scrollbar-color: #000000 #c1d831;
     scrollbar-width: auto;
   }
+
   * { box-sizing: border-box; }
 
   html { 
@@ -56,8 +48,31 @@
   }
 
   a { color: inherit; text-decoration: none; }
-
   img, video { max-width: 100%; height: auto; display: block; }
+
+  /* ---------- TRANSITION LOADER OVERLAY ---------- */
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .page-loader.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .page-loader img {
+    width: 500px;
+    height: auto;
+  }
 
   /* ---------- HERO WRAPPER ---------- */
   .hero-wrapper {
@@ -228,10 +243,6 @@
     align-items: center;
   }
 
-  html[dir="ltr"] .about-container {
-    grid-template-columns: 1.15fr 0.85fr;
-  }
-
   .bio {
     display: flex;
     flex-direction: column;
@@ -292,7 +303,7 @@
   .app-icon:hover { transform: scale(1.08); }
 
   .app-icon.shake {
-    animation: shake .45s ease;
+    animation: shake .5s ease;
   }
 
   @keyframes shake {
@@ -348,6 +359,7 @@
     overflow: hidden;
     position: relative;
     aspect-ratio: 1 / 1;
+    cursor: pointer;
   }
 
   .work-card.a { grid-area: a; }
@@ -449,9 +461,7 @@
     z-index: 2;
   }
 
-  .footer-block {
-    text-align: inherit;
-  }
+  .footer-block { text-align: inherit; }
 
   .footer-left .name {
     font-weight: 800;
@@ -498,20 +508,14 @@
   /* ---------- MOBILE SPECIFIC STYLES (≤ 768px) ------------ */
   /* ========================================================= */
   @media (max-width: 768px) {
-    
     .nav { display: none; }
-    
-    .mobile-nav-header {
-      display: flex;
-    }
+    .mobile-nav-header { display: flex; }
 
     html[dir="ltr"] .mobile-nav-header {
       flex-direction: row-reverse;
     }
 
-    .mobile-nav-header .logo-container img {
-      height: 38px;
-    }
+    .mobile-nav-header .logo-container img { height: 38px; }
 
     .hero-wrapper {
       padding: 16px 16px 28px 16px;
@@ -522,7 +526,6 @@
       justify-content: space-between;
     }
 
-    /* LARGE BACKGROUND GIF */
     .hero-bg-gif {
       width: 320vw !important;
       max-width: none !important;
@@ -532,12 +535,7 @@
       opacity: 0.35;
     }
 
-    /* TOP TITLE DIRECTLY BELOW HEADER WITH SLIGHT MARGIN */
-    .hero-top {
-      margin-top: 4px;
-      margin-bottom: 0;
-    }
-
+    .hero-top { margin-top: 4px; margin-bottom: 0; }
     .hero-line1 {
       font-size: clamp(48px, 13.5vw, 84px);
       line-height: 1.02;
@@ -545,12 +543,7 @@
       letter-spacing: -1px;
     }
 
-    /* BOTTOM TITLE PUSHED DOWN TO THE BOTTOM MARGIN */
-    .hero-bottom {
-      margin-top: auto;
-      margin-bottom: 16px;
-    }
-
+    .hero-bottom { margin-top: auto; margin-bottom: 16px; }
     .hero-line2 {
       font-size: clamp(48px, 13.5vw, 84px);
       line-height: 1.02;
@@ -558,37 +551,13 @@
       letter-spacing: -1px;
     }
 
-    /* ABOUT SECTION MOBILE */
-    .about {
-      padding: 48px 20px;
-    }
+    .about { padding: 48px 20px; }
+    .about-container { grid-template-columns: 1fr !important; gap: 36px; }
+    .bio p { font-size: 19px; line-height: 1.6; text-align: justify; }
+    .software { width: 100%; margin: 0 auto; }
 
-    .about-container {
-      grid-template-columns: 1fr !important;
-      gap: 36px;
-    }
-
-    .bio p {
-      font-size: 19px;
-      line-height: 1.6;
-      text-align: justify;
-    }
-
-    .software {
-      width: 100%;
-      margin: 0 auto;
-    }
-
-    /* PORTFOLIO GRID MOBILE */
-    .portfolio {
-      padding: 20px;
-      padding-top: 30px;
-    }
-
-    .portfolio h2 {
-      font-size: 38px;
-      margin-bottom: 20px;
-    }
+    .portfolio { padding: 20px; padding-top: 30px; }
+    .portfolio h2 { font-size: 38px; margin-bottom: 20px; }
 
     .work-grid {
       grid-template-columns: 1fr;
@@ -599,33 +568,25 @@
       gap: 18px;
     }
 
-    .work-card.d {
-      display: none;
-    }
+    .work-card.d { display: none; }
+    .work-card .overlay-img { max-width: 130px; max-height: 130px; }
 
-    .work-card .overlay-img {
-      max-width: 130px;
-      max-height: 130px;
-    }
-
-    /* FOOTER MOBILE */
-    footer {
-      padding: 48px 20px;
-    }
-
+    footer { padding: 48px 20px; }
     .footer-inner {
       flex-direction: column-reverse;
       align-items: flex-start;
       gap: 32px;
     }
-
-    .footer-right h4 {
-      font-size: 38px;
-    }
+    .footer-right h4 { font-size: 38px; }
   }
 </style>
 </head>
 <body>
+
+<!-- TRANSITION LOADER OVERLAY -->
+<div class="page-loader" id="pageLoader">
+  <img src="images/3dgifmaker89467.gif" alt="Loading...">
+</div>
 
 <div class="hero-wrapper">
   <!-- BACKGROUND GIF -->
@@ -729,7 +690,7 @@
     </div>
     
     <!-- CARD B: Atyaf -->
-    <div class="work-card b">
+    <div class="work-card b" data-href="atyaf.html">
       <img src="images/realestock.png" alt="Real Estate Stock" class="stock-img">
       <video class="card-video" autoplay loop muted playsinline preload="auto">
         <source src="videos/patternatyaf.mp4" type="video/mp4">
@@ -774,6 +735,33 @@
 </footer>
 
 <script>
+  // Page Entry Loader Fade-out (Runs when arriving on any page)
+  window.addEventListener('DOMContentLoaded', function() {
+    var loader = document.getElementById('pageLoader');
+    if (loader) {
+      setTimeout(function() {
+        loader.classList.remove('active');
+      }, 50);
+    }
+  });
+
+  // Intercept Card Links to Trigger 500ms Transition Loader Delay
+  document.querySelectorAll('[data-href]').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      var targetUrl = card.getAttribute('data-href');
+      var loader = document.getElementById('pageLoader');
+      
+      if (loader) {
+        loader.classList.add('active');
+      }
+
+      setTimeout(function() {
+        window.location.href = targetUrl;
+      }, 500);
+    });
+  });
+
   // Mobile Hamburger Toggle
   var hamburgerBtn = document.getElementById('hamburgerBtn');
   var mobileMenu = document.getElementById('mobileMenu');

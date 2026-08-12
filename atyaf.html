@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أطياف — Salem Tarmissi</title>
+<link rel="icon" type="image/svg+xml" href="images/Asset 5.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000000;
+    --ink: #ffffff;
+    --paper: #c1d82f;
+  }
+
+  /* Custom Loading Overlay */
+  .loader-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #bfd730;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .loader-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .loader-gif {
+    width: 500px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 14px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c1d831;
+  }
+  html {
+    scrollbar-color: #c1d831 #000000;
+    scrollbar-width: auto;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { 
+    scroll-behavior: smooth; 
+    font-size: 30px; 
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    direction: rtl;
+    text-align: right;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img, video { max-width: 100%; height: auto; display: block; }
+
+  /* ---------- FADE IN SLIDE UP ANIMATION CLASSES ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- NAV BAR ---------- */
+  .hero-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 5vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header {
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    font-size: 26px;
+    font-weight: 400;
+  }
+
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+
+  .nav a {
+    opacity: 0.85;
+    transition: opacity .2s ease;
+  }
+
+  .nav a:hover { opacity: 1; }
+
+  .nav .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+  }
+
+  .nav .logo-container img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* ---------- MAIN CONTAINER ---------- */
+  .atyaf-container {
+    width: 100%;
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 10px 5vw 100px 5vw;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Full screen section layout: each major section acts as a full-viewport page stop */
+  .page-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0;
+    scroll-margin-top: 40px;
+  }
+
+  /* TOP SECTION: Grid (Right: Big Title & Paragraph | Left: Secondary Assets & Meta) */
+  .atyaf-top-grid {
+    display: grid;
+    /* In RTL: 1fr is the Right column, 440px is the Left column */
+    grid-template-columns: 1fr 440px; 
+    gap: 80px;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Right Column (Big Logo & Description Paragraph) */
+  .atyaf-main-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: right;
+  }
+
+  .big-atyaf-logo {
+    width: 100%;
+    max-width: 1150px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 45px;
+    transition: filter 0.3s ease;
+  }
+
+  .big-atyaf-logo:hover {
+    filter: brightness(0) invert(1);
+  }
+
+  .atyaf-desc {
+    width: 100%;
+    font-size: 34px; 
+    line-height: 1.65;
+    color: #e0e0e0;
+    margin: 0;
+    text-align: justify;
+    font-weight: 400;
+  }
+
+  .atyaf-desc span.highlight {
+    color: #c1d82f;
+    font-weight: 700;
+  }
+
+  /* Left Column (Secondary Assets + Meta Column) */
+  .secondary-col {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+  }
+
+  .other-elements-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .other-elements-title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 2px;
+    text-align: right;
+  }
+
+  .elements-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .element-box {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .element-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .element-box.wide-asset {
+    grid-column: span 2;
+    aspect-ratio: auto;
+    height: auto;
+    max-height: 85px;
+    justify-self: stretch;
+  }
+
+  .element-box.wide-asset img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Meta block */
+  .atyaf-meta-side {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    text-align: right;
+  }
+
+  .meta-item-side {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .meta-label-side {
+    font-size: 28px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  .meta-value-side {
+    font-size: 68px; 
+    font-weight: 700;
+    color: #c1d82f;
+  }
+
+  /* ---------- COMBINED SECTION 2: INFO, ASSETS & SLIDERS ---------- */
+  .combined-top-section {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    width: 100%;
+  }
+
+  /* ---------- SLIDERS SECTION ---------- */
+  .sliders-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .slider-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    width: 100%;
+  }
+
+  .slider-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px; 
+    font-weight: 600;
+    color: #c1d82f;
+  }
+
+  .slider-label-row .sub-label {
+    font-weight: 400;
+  }
+
+  .custom-range-track {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-range-track input[type="range"] {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    z-index: 5;
+    margin: 0;
+  }
+
+  .custom-range-track input[type="range"]:disabled {
+    cursor: default;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    background: #c1d82f;
+    transform: rotate(45deg);
+    border: none;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    background: #c1d82f;
+    transform: rotate(45deg);
+    border: none;
+  }
+
+  /* ---------- COLOR PALETTE SECTION (FULL WIDTH) ---------- */
+  .color-palette-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .color-palette-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* ---------- INTERACTIVE LOGO SLIDER STAGE ---------- */
+  .interactive-logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .logo-slider-stage {
+    position: relative;
+    height: 420px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .logo-stage-img {
+    position: absolute;
+    height: 350px; 
+    width: auto;
+    object-fit: contain;
+    opacity: 0; 
+  }
+
+  #logoCenter { opacity: 1; }
+
+  .slider-instruction {
+    font-size: 26px; 
+    font-weight: 600;
+    color: #c1d82f;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  /* ---------- BOTTOM BRANDING SHOWCASE ---------- */
+  .bottom-branding-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 75px;
+    width: 100%;
+    max-width: 1700px;
+    margin: 0 auto;
+  }
+
+  .quote-arabic-huge {
+    font-size: clamp(42px, 5vw, 64px); 
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto;
+    line-height: 1.4;
+    min-height: 2.8em;
+  }
+
+  .typewriter-cursor {
+    display: inline-block;
+    width: 4px;
+    background-color: #c1d82f;
+    margin-right: 5px;
+    animation: blink 0.8s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .font-showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .font-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: right;
+  }
+
+  .font-name-title {
+    font-size: 44px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+  }
+
+  .font-alphabet-display {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .alphabet-row {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 1.3;
+  }
+
+  .alphabet-row.english-row {
+    direction: ltr;
+    text-align: left;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+  }
+
+  .font-weights-list {
+    font-size: 26px;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .font-weights-list span {
+    color: #c1d82f;
+    font-weight: 600;
+  }
+
+  .font-preview-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 60px 40px;
+    min-height: 350px;
+  }
+
+  .dynamic-abjad-preview {
+    font-size: 80px;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    transition: font-weight 0.4s ease;
+    margin: 0;
+  }
+
+  .dynamic-weight-indicator {
+    font-size: 22px;
+    color: #c1d82f;
+    margin-top: 30px;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: #000000;
+    color: #bfd730;
+    padding: clamp(60px, 9vw, 120px) clamp(30px, 8vw, 84px);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .footer-bg-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(85%, 975px);
+    height: auto;
+    max-height: 80%;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.50;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 45px;
+    max-width: 1800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 1024px) {
+    .atyaf-top-grid {
+      grid-template-columns: 1fr;
+    }
+    .secondary-col {
+      order: 2;
+    }
+    .atyaf-main-info {
+      order: 1;
+    }
+    .font-showcase-grid {
+      grid-template-columns: 1fr;
+    }
+    .page-section {
+      min-height: auto;
+      padding: 60px 0;
+    }
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 40px;
+    }
+    .footer-block.footer-right {
+      text-align: right;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Full-screen Loading Overlay -->
+<div id="page-loader" class="loader-overlay">
+  <img src="images/3dgifmaker89467.gif" alt="Loading..." class="loader-gif">
+</div>
+
+<div class="hero-wrapper reveal">
+  <!-- NAV BAR -->
+  <header>
+    <nav class="nav">
+      <div class="nav-group">
+        <a href="index.html#portfolio">أعمالي</a>
+        <a href="index.html#about">عني</a>
+      </div>
+
+      <div class="logo-container">
+        <a href="index.html"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
+      </div>
+
+      <div class="nav-group">
+        <a href="#" class="lang-toggle">English</a>
+        <a href="index.html#contact">تواصل</a>
+      </div>
+    </nav>
+  </header>
+</div>
+
+<main class="atyaf-container">
+
+  <!-- PAGE SECTION 1: COMBINED INFO, ASSETS & NON-INTERACTIVE SLIDERS -->
+  <section class="page-section">
+    <div class="combined-top-section reveal">
+      
+      <!-- Top Grid: Description, Logo, Secondary Assets, Meta -->
+      <div class="atyaf-top-grid">
+        
+        <!-- RIGHT: Big Logo & Paragraph -->
+        <div class="atyaf-main-info">
+          <img src="images/atyaf.png" alt="Atyaf Logo Gold" class="big-atyaf-logo">
+          
+          <p class="atyaf-desc">
+            أطياف للتطوير والاستثمار العقاري هي شركة متخصة في تطوير المشاريع السكنية والتجارية <span class="highlight">في الرياض والدمام</span>، بخبرة تمتد عبر <span class="highlight">18 مشروعاً ناجحاً</span>. تركز الشركة على تقديم مشاريع تجمع بين <span class="highlight">التصميم العصري</span>، والتخطيط الذكي، والمواقع الحيوية، وجودة التنفيذ، مع تجربة واضحة وموثوقة تمتد من الاستفسار حتي استلام العقار. وتسعى أطياف إلى بناء قيمة حقيقية لعملائها من خلال حلول عقارية مدروسة، تجمع بين احتياجاتهم الحالية وتطلعاتهم المستقبلية.
+          </p>
+        </div>
+
+        <!-- LEFT: Secondary Assets & Meta Column -->
+        <div class="secondary-col">
+          <div class="other-elements-wrapper">
+            <div class="other-elements-title">عناصر أخرى</div>
+            <div class="elements-grid">
+              <div class="element-box"><img src="images/Asset 33.png" alt="Asset 33"></div>
+              <div class="element-box"><img src="images/atyaf_min_1.png" alt="atyaf_min_1"></div>
+              <div class="element-box"><img src="images/Asset 40.png" alt="Asset 40"></div>
+              <div class="element-box"><img src="images/Asset 39.png" alt="Asset 39"></div>
+              <div class="element-box wide-asset"><img src="images/Asset 41.png" alt="Asset 41"></div>
+            </div>
+          </div>
+
+          <!-- Meta block -->
+          <div class="atyaf-meta-side">
+            <div class="meta-item-side">
+              <span class="meta-label-side">قطاع:</span>
+              <span class="meta-value-side">العقارات</span>
+            </div>
+            <div class="meta-item-side">
+              <span class="meta-label-side">السنة:</span>
+              <span class="meta-value-side">2026</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Non-Interactive Sliders placed inside the same section -->
+      <div class="sliders-section">
+        <div class="slider-row">
+          <div class="slider-label-row">
+            <span>تقليدي</span>
+            <span class="sub-label" style="color: #c1d82f;">معاصر</span>
+          </div>
+          <div class="custom-range-track">
+            <input type="range" min="0" max="100" value="50" disabled>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-label-row">
+            <span>رسمي</span>
+            <span class="sub-label" style="color: #c1d82f;">ودود</span>
+          </div>
+          <div class="custom-range-track">
+            <input type="range" min="0" max="100" value="15" disabled>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-label-row">
+            <span>هادئ</span>
+            <span class="sub-label" style="color: #c1d82f;">جريء</span>
+          </div>
+          <div class="custom-range-track">
+            <input type="range" min="0" max="100" value="30" disabled>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE SECTION 2: COLOR PALETTE (FULL WIDTH) -->
+  <section class="page-section">
+    <div class="color-palette-container reveal">
+      <img src="images/atyafcolorpallete.png" alt="Atyaf Color Palette">
+    </div>
+  </section>
+
+  <!-- PAGE SECTION 3: INTERACTIVE LOGO SLIDER -->
+  <section class="page-section">
+    <div class="interactive-logo-wrapper reveal">
+      <div class="logo-slider-stage">
+        <img src="images/atyaficon.svg" alt="Atyaf Icon" class="logo-stage-img" id="logoRight">
+        <img src="images/atyaf.svg" alt="Atyaf Standard" class="logo-stage-img" id="logoCenter">
+        <img src="images/atyaflong.svg" alt="Atyaf Long" class="logo-stage-img" id="logoLeft">
+      </div>
+      
+      <div style="width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 10px;">
+        <div class="custom-range-track">
+          <input type="range" id="interactiveRhombusSlider" min="0" max="100" value="50">
+        </div>
+        <div class="slider-instruction">اضغط وحرك !</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE SECTION 4: BOTTOM BRANDING SHOWCASE (TYPOGRAPHY / FONT SPEC) -->
+  <section class="page-section">
+    <div class="bottom-branding-showcase reveal">
+      <h2 class="quote-arabic-huge" id="typewriterHeading">خبرة تتجسد في المشاريع<br>وثقة تُبنى مع كل عميل.<span class="typewriter-cursor">&nbsp;</span></h2>
+      
+      <div class="font-showcase-grid">
+        <div class="font-info-col">
+          <h3 class="font-name-title">IBM Plex Sans Arabic / آي بي إم بليكس سانس عربي</h3>
+          
+          <div class="font-alphabet-display">
+            <div class="alphabet-row">أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ</div>
+            <div class="alphabet-row english-row">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+          </div>
+
+          <p class="font-weights-list">
+            Weights: <span>Light (300), Regular (400), Medium (500), SemiBold (600), Bold (700)</span>
+          </p>
+        </div>
+
+        <div class="font-preview-col">
+          <div class="dynamic-abjad-preview" id="dynamicAbjadText">أبجد</div>
+          <div class="dynamic-weight-indicator" id="dynamicWeightLabel">Weight: Regular (400)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER SECTION -->
+<footer id="contact">
+  <img src="images/logog.svg" alt="" class="footer-bg-logo">
+
+  <div class="footer-inner">
+    <div class="footer-block footer-left">
+      <p class="name" data-i18n="footer_name">سالم الطرميسي</p>
+      <p class="title-text" data-i18n="footer_title">مصمم هويات بصرية</p>
+      <p class="links">
+        <a href="#">Instagram</a> • <a href="#">Behance</a> • <a href="#">Email</a>
+      </p>
+    </div>
+
+    <div class="footer-block footer-right">
+      <h4 data-i18n="footer_cta">هويتك الجديدة<br>بإنتظارك</h4>
+      <p>© 2026 Salem Tarmissi</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Loader & Smooth Page Transition Script */
+  document.addEventListener("DOMContentLoaded", function() {
+    const loader = document.getElementById('page-loader');
+
+    // Fade out loader once the page is fully shown
+    window.addEventListener("pageshow", function(event) {
+      loader.classList.remove('active');
+    });
+
+    // Intercept clicks on links to trigger transition before changing pages
+    const internalLinks = document.querySelectorAll('a');
+
+    internalLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        
+        // Skip anchors, empty links, or target="_blank"
+        if (!href || href.startsWith('#') || href.startsWith('javascript') || this.target === '_blank') {
+          return;
+        }
+
+        e.preventDefault();
+        loader.classList.add('active');
+
+        // Delayed navigation (1500ms = 1.5 seconds)
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+      });
+    });
+
+    /* Intersection Observer for Fade-In Slide-Up Reveal on Scroll */
+    const reveals = document.querySelectorAll(".reveal");
+
+    const revealOnScroll = function(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver(revealOnScroll, observerOptions);
+    reveals.forEach(revealEl => {
+      observer.observe(revealEl);
+    });
+
+    /* Typewriter & Backspace Loop Animation for Heading */
+    const headingEl = document.getElementById('typewriterHeading');
+    const texts = [
+      "خبرة تتجسد في المشاريع<br>وثقة تُبنى مع كل عميل.",
+      "آي بي إم بليكس سانس عربي",
+      "أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ"
+    ];
+    
+    let currentTextIndex = 0;
+    
+    function runTypewriterLoop() {
+      const fullHtml = texts[currentTextIndex];
+      const cleanText = fullHtml.replace(/<br>/g, '\n');
+      let charIndex = cleanText.length;
+      
+      function backspace() {
+        if (charIndex > 0) {
+          charIndex--;
+          let currentClean = cleanText.substring(0, charIndex);
+          headingEl.innerHTML = currentClean.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
+          setTimeout(backspace, 35);
+        } else {
+          currentTextIndex = (currentTextIndex + 1) % texts.length;
+          setTimeout(typeForward, 400);
+        }
+      }
+
+      const targetClean = texts[currentTextIndex].replace(/<br>/g, '\n');
+      let typeIndex = 0;
+      
+      function typeForward() {
+        if (typeIndex <= targetClean.length) {
+          let currentStr = targetClean.substring(0, typeIndex);
+          headingEl.innerHTML = currentStr.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
+          typeIndex++;
+          setTimeout(typeForward, 50);
+        } else {
+          setTimeout(backspace, 3000);
+        }
+      }
+
+      setTimeout(backspace, 3000);
+    }
+
+    setTimeout(runTypewriterLoop, 1500);
+
+    /* Automatic Font Weight Cycling Animation */
+    const abjadPreview = document.getElementById('dynamicAbjadText');
+    const weightLabel = document.getElementById('dynamicWeightLabel');
+    const weights = [
+      { weight: 300, name: 'Light (300)' },
+      { weight: 400, name: 'Regular (400)' },
+      { weight: 500, name: 'Medium (500)' },
+      { weight: 600, name: 'SemiBold (600)' },
+      { weight: 700, name: 'Bold (700)' }
+    ];
+    let weightIndex = 0;
+
+    setInterval(() => {
+      weightIndex = (weightIndex + 1) % weights.length;
+      const currentW = weights[weightIndex];
+      abjadPreview.style.fontWeight = currentW.weight;
+      weightLabel.textContent = `Weight: ${currentW.name}`;
+    }, 1800);
+  });
+
+  /* Interactive Logo Slider Script */
+  const slider = document.getElementById('interactiveRhombusSlider');
+  const logoCenter = document.getElementById('logoCenter');
+  const logoLeft = document.getElementById('logoLeft');
+  const logoRight = document.getElementById('logoRight');
+
+  function updateSliderVisuals(val) {
+    if (val <= 25) {
+      logoLeft.style.opacity = (25 - val) / 25;
+      logoCenter.style.opacity = 0;
+      logoRight.style.opacity = 0;
+    } else if (val <= 50) {
+      logoLeft.style.opacity = 0;
+      logoCenter.style.opacity = (val - 25) / 25;
+      logoRight.style.opacity = 0;
+    } else if (val <= 75) {
+      logoLeft.style.opacity = 0;
+      logoCenter.style.opacity = (75 - val) / 25;
+      logoRight.style.opacity = 0;
+    } else {
+      logoLeft.style.opacity = 0;
+      logoCenter.style.opacity = 0;
+      logoRight.style.opacity = (val - 75) / 25;
+    }
+  }
+
+  slider.addEventListener('input', function() {
+    updateSliderVisuals(parseInt(slider.value));
+  });
+
+  function snapSlider() {
+    const val = parseInt(slider.value);
+    let targetVal = 50;
+    
+    if (val < 25) {
+      targetVal = 0;
+    } else if (val > 75) {
+      targetVal = 100;
+    } else {
+      targetVal = 50;
+    }
+    
+    const startVal = val;
+    const distance = targetVal - startVal;
+    let step = 0;
+    const totalSteps = 15;
+    
+    const snapAnim = setInterval(() => {
+      step++;
+      const currentVal = startVal + (distance * (step / totalSteps));
+      slider.value = currentVal;
+      updateSliderVisuals(currentVal);
+      
+      if (step >= totalSteps) {
+        clearInterval(snapAnim);
+        slider.value = targetVal;
+        updateSliderVisuals(targetVal);
+      }
+    }, 15);
+  }
+
+  slider.addEventListener('change', snapSlider);
+</script>
+
+</body>
+</html>
