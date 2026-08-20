@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4EZH5DZLFQ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -149,14 +149,13 @@
   /* ---------- MAIN CONTAINER ---------- */
   .atyaf-container {
     width: 100%;
-    max-width: 2000px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 10px 5vw 100px 5vw;
     display: flex;
     flex-direction: column;
   }
 
-  /* Full screen section layout: each major section acts as a full-viewport page stop */
   .page-section {
     min-height: 100vh;
     display: flex;
@@ -166,17 +165,14 @@
     scroll-margin-top: 40px;
   }
 
-  /* TOP SECTION: Grid (Right: Big Title & Paragraph | Left: Secondary Assets & Meta) */
   .atyaf-top-grid {
     display: grid;
-    /* In RTL: 1fr is the Right column, 440px is the Left column */
     grid-template-columns: 1fr 440px; 
     gap: 80px;
     align-items: center;
     width: 100%;
   }
 
-  /* Right Column (Big Logo & Description Paragraph) */
   .atyaf-main-info {
     display: flex;
     flex-direction: column;
@@ -186,7 +182,7 @@
 
   .big-atyaf-logo {
     width: 100%;
-    max-width: 1150px;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
     margin-bottom: 45px;
@@ -212,17 +208,19 @@
     font-weight: 700;
   }
 
-  /* Left Column (Secondary Assets + Meta Column) */
   .secondary-col {
     display: flex;
     flex-direction: column;
     gap: 45px;
+    justify-content: center;
   }
 
   .other-elements-wrapper {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
+    margin-bottom: 30px;
   }
 
   .other-elements-title {
@@ -266,7 +264,6 @@
     object-fit: contain;
   }
 
-  /* Meta block */
   .atyaf-meta-side {
     display: flex;
     flex-direction: column;
@@ -292,7 +289,6 @@
     color: #c1d82f;
   }
 
-  /* ---------- COMBINED SECTION 2: INFO, ASSETS & SLIDERS ---------- */
   .combined-top-section {
     display: flex;
     flex-direction: column;
@@ -300,7 +296,6 @@
     width: 100%;
   }
 
-  /* ---------- SLIDERS SECTION ---------- */
   .sliders-section {
     display: flex;
     flex-direction: column;
@@ -374,7 +369,6 @@
     border: none;
   }
 
-  /* ---------- COLOR PALETTE SECTION (FULL WIDTH) ---------- */
   .color-palette-container {
     width: 100%;
     max-width: 100%;
@@ -389,14 +383,13 @@
     object-fit: contain;
   }
 
-  /* ---------- INTERACTIVE LOGO SLIDER STAGE ---------- */
   .interactive-logo-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 60px;
     width: 100%;
-    max-width: 1600px;
+    max-width: 1400px;
     margin: 0 auto;
   }
 
@@ -415,6 +408,7 @@
     width: auto;
     object-fit: contain;
     opacity: 0; 
+    transition: opacity 0.1s ease-out;
   }
 
   #logoCenter { opacity: 1; }
@@ -427,13 +421,12 @@
     margin-top: 15px;
   }
 
-  /* ---------- BOTTOM BRANDING SHOWCASE ---------- */
   .bottom-branding-showcase {
     display: flex;
     flex-direction: column;
     gap: 75px;
     width: 100%;
-    max-width: 1700px;
+    max-width: 1400px;
     margin: 0 auto;
   }
 
@@ -445,6 +438,8 @@
     margin: 0 auto;
     line-height: 1.4;
     min-height: 2.8em;
+    max-width: 100%;
+    word-break: break-word;
   }
 
   .typewriter-cursor {
@@ -466,6 +461,7 @@
     gap: 80px;
     align-items: center;
     width: 100%;
+    max-width: 100%;
   }
 
   .font-info-col {
@@ -473,27 +469,31 @@
     flex-direction: column;
     gap: 30px;
     text-align: right;
+    min-width: 0;
   }
 
   .font-name-title {
-    font-size: 44px;
+    font-size: 40px;
     font-weight: 700;
     color: #fff;
     margin: 0;
+    word-break: break-word;
   }
 
   .font-alphabet-display {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
   }
 
   .alphabet-row {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 700;
     color: #fff;
     letter-spacing: 2px;
     line-height: 1.3;
+    word-break: break-word;
   }
 
   .alphabet-row.english-row {
@@ -507,6 +507,7 @@
     color: #888;
     line-height: 1.6;
     margin: 0;
+    word-break: break-word;
   }
 
   .font-weights-list span {
@@ -524,6 +525,7 @@
     border-radius: 16px;
     padding: 60px 40px;
     min-height: 350px;
+    width: 100%;
   }
 
   .dynamic-abjad-preview {
@@ -543,7 +545,6 @@
     letter-spacing: 1px;
   }
 
-  /* ---------- FOOTER ---------- */
   footer {
     background: #000000;
     color: #bfd730;
@@ -574,7 +575,7 @@
     align-items: flex-end;
     flex-wrap: wrap;
     gap: 45px;
-    max-width: 1800px;
+    max-width: 1400px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
@@ -610,13 +611,11 @@
 </head>
 <body>
 
-<!-- Full-screen Loading Overlay -->
 <div id="page-loader" class="loader-overlay">
   <img src="images/3dgifmaker89467.gif" alt="Loading..." class="loader-gif">
 </div>
 
 <div class="hero-wrapper reveal">
-  <!-- NAV BAR -->
   <header>
     <nav class="nav">
       <div class="nav-group">
@@ -638,24 +637,15 @@
 
 <main class="atyaf-container">
 
-  <!-- PAGE SECTION 1: COMBINED INFO, ASSETS & NON-INTERACTIVE SLIDERS -->
   <section class="page-section">
     <div class="combined-top-section reveal">
       
-      <!-- Top Grid: Description, Logo, Secondary Assets, Meta -->
       <div class="atyaf-top-grid">
         
-        <!-- RIGHT: Big Logo & Paragraph -->
         <div class="atyaf-main-info">
           <img src="images/atyaf.png" alt="Atyaf Logo Gold" class="big-atyaf-logo">
           
-          <p class="atyaf-desc">
-            أطياف للتطوير والاستثمار العقاري هي شركة متخصة في تطوير المشاريع السكنية والتجارية <span class="highlight">في الرياض والدمام</span>، بخبرة تمتد عبر <span class="highlight">18 مشروعاً ناجحاً</span>. تركز الشركة على تقديم مشاريع تجمع بين <span class="highlight">التصميم العصري</span>، والتخطيط الذكي، والمواقع الحيوية، وجودة التنفيذ، مع تجربة واضحة وموثوقة تمتد من الاستفسار حتي استلام العقار. وتسعى أطياف إلى بناء قيمة حقيقية لعملائها من خلال حلول عقارية مدروسة، تجمع بين احتياجاتهم الحالية وتطلعاتهم المستقبلية.
-          </p>
-        </div>
-
-        <!-- LEFT: Secondary Assets & Meta Column -->
-        <div class="secondary-col">
+          <!-- Reordered: Other Assets placed above the paragraph -->
           <div class="other-elements-wrapper">
             <div class="other-elements-title">عناصر أخرى</div>
             <div class="elements-grid">
@@ -667,7 +657,12 @@
             </div>
           </div>
 
-          <!-- Meta block -->
+          <p class="atyaf-desc">
+            أطياف للتطوير والاستثمار العقاري هي شركة متخصة في تطوير المشاريع السكنية والتجارية <span class="highlight">في الرياض والدمام</span>، بخبرة تمتد عبر <span class="highlight">18 مشروعاً ناجحاً</span>. تركز الشركة على تقديم مشاريع تجمع بين <span class="highlight">التصميم العصري</span>، والتخطيط الذكي، والمواقع الحيوية، وجودة التنفيذ، مع تجربة واضحة وموثوقة تمتد من الاستفسار حتي استلام العقار. وتسعى أطياف إلى بناء قيمة حقيقية لعملائها من خلال حلول عقارية مدروسة، تجمع بين احتياجاتهم الحالية وتطلعاتهم المستقبلية.
+          </p>
+        </div>
+
+        <div class="secondary-col">
           <div class="atyaf-meta-side">
             <div class="meta-item-side">
               <span class="meta-label-side">قطاع:</span>
@@ -682,7 +677,6 @@
 
       </div>
 
-      <!-- Non-Interactive Sliders placed inside the same section -->
       <div class="sliders-section">
         <div class="slider-row">
           <div class="slider-label-row">
@@ -718,14 +712,12 @@
     </div>
   </section>
 
-  <!-- PAGE SECTION 2: COLOR PALETTE (FULL WIDTH) -->
   <section class="page-section">
     <div class="color-palette-container reveal">
       <img src="images/atyafcolorpallete.png" alt="Atyaf Color Palette">
     </div>
   </section>
 
-  <!-- PAGE SECTION 3: INTERACTIVE LOGO SLIDER -->
   <section class="page-section">
     <div class="interactive-logo-wrapper reveal">
       <div class="logo-slider-stage">
@@ -743,7 +735,6 @@
     </div>
   </section>
 
-  <!-- PAGE SECTION 4: BOTTOM BRANDING SHOWCASE (TYPOGRAPHY / FONT SPEC) -->
   <section class="page-section">
     <div class="bottom-branding-showcase reveal">
       <h2 class="quote-arabic-huge" id="typewriterHeading">خبرة تتجسد في المشاريع<br>وثقة تُبنى مع كل عميل.<span class="typewriter-cursor">&nbsp;</span></h2>
@@ -772,7 +763,6 @@
 
 </main>
 
-<!-- FOOTER SECTION -->
 <footer id="contact">
   <img src="images/logog.svg" alt="" class="footer-bg-logo">
 
@@ -793,23 +783,20 @@
 </footer>
 
 <script>
-  /* Loader & Smooth Page Transition Script */
   document.addEventListener("DOMContentLoaded", function() {
+    /* Loader & Smooth Page Transition Script */
     const loader = document.getElementById('page-loader');
 
-    // Fade out loader once the page is fully shown
     window.addEventListener("pageshow", function(event) {
       loader.classList.remove('active');
     });
 
-    // Intercept clicks on links to trigger transition before changing pages
     const internalLinks = document.querySelectorAll('a');
 
     internalLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
         
-        // Skip anchors, empty links, or target="_blank"
         if (!href || href.startsWith('#') || href.startsWith('javascript') || this.target === '_blank') {
           return;
         }
@@ -817,7 +804,6 @@
         e.preventDefault();
         loader.classList.add('active');
 
-        // Delayed navigation (1500ms = 1.5 seconds)
         setTimeout(() => {
           window.location.href = href;
         }, 500);
@@ -910,70 +896,70 @@
       abjadPreview.style.fontWeight = currentW.weight;
       weightLabel.textContent = `Weight: ${currentW.name}`;
     }, 1800);
-  });
 
-  /* Interactive Logo Slider Script */
-  const slider = document.getElementById('interactiveRhombusSlider');
-  const logoCenter = document.getElementById('logoCenter');
-  const logoLeft = document.getElementById('logoLeft');
-  const logoRight = document.getElementById('logoRight');
+    /* Interactive Logo Slider Script */
+    const slider = document.getElementById('interactiveRhombusSlider');
+    const logoCenter = document.getElementById('logoCenter');
+    const logoLeft = document.getElementById('logoLeft');
+    const logoRight = document.getElementById('logoRight');
 
-  function updateSliderVisuals(val) {
-    if (val <= 25) {
-      logoLeft.style.opacity = (25 - val) / 25;
-      logoCenter.style.opacity = 0;
-      logoRight.style.opacity = 0;
-    } else if (val <= 50) {
-      logoLeft.style.opacity = 0;
-      logoCenter.style.opacity = (val - 25) / 25;
-      logoRight.style.opacity = 0;
-    } else if (val <= 75) {
-      logoLeft.style.opacity = 0;
-      logoCenter.style.opacity = (75 - val) / 25;
-      logoRight.style.opacity = 0;
-    } else {
-      logoLeft.style.opacity = 0;
-      logoCenter.style.opacity = 0;
-      logoRight.style.opacity = (val - 75) / 25;
-    }
-  }
-
-  slider.addEventListener('input', function() {
-    updateSliderVisuals(parseInt(slider.value));
-  });
-
-  function snapSlider() {
-    const val = parseInt(slider.value);
-    let targetVal = 50;
-    
-    if (val < 25) {
-      targetVal = 0;
-    } else if (val > 75) {
-      targetVal = 100;
-    } else {
-      targetVal = 50;
-    }
-    
-    const startVal = val;
-    const distance = targetVal - startVal;
-    let step = 0;
-    const totalSteps = 15;
-    
-    const snapAnim = setInterval(() => {
-      step++;
-      const currentVal = startVal + (distance * (step / totalSteps));
-      slider.value = currentVal;
-      updateSliderVisuals(currentVal);
-      
-      if (step >= totalSteps) {
-        clearInterval(snapAnim);
-        slider.value = targetVal;
-        updateSliderVisuals(targetVal);
+    function updateSliderVisuals(val) {
+      if (val <= 25) {
+        logoLeft.style.opacity = (25 - val) / 25;
+        logoCenter.style.opacity = 0;
+        logoRight.style.opacity = 0;
+      } else if (val <= 50) {
+        logoLeft.style.opacity = 0;
+        logoCenter.style.opacity = (val - 25) / 25;
+        logoRight.style.opacity = 0;
+      } else if (val <= 75) {
+        logoLeft.style.opacity = 0;
+        logoCenter.style.opacity = (75 - val) / 25;
+        logoRight.style.opacity = 0;
+      } else {
+        logoLeft.style.opacity = 0;
+        logoCenter.style.opacity = 0;
+        logoRight.style.opacity = (val - 75) / 25;
       }
-    }, 15);
-  }
+    }
 
-  slider.addEventListener('change', snapSlider);
+    slider.addEventListener('input', function() {
+      updateSliderVisuals(parseInt(slider.value));
+    });
+
+    function snapSlider() {
+      const val = parseInt(slider.value);
+      let targetVal = 50;
+      
+      if (val < 25) {
+        targetVal = 0;
+      } else if (val > 75) {
+        targetVal = 100;
+      } else {
+        targetVal = 50;
+      }
+      
+      const startVal = val;
+      const distance = targetVal - startVal;
+      let step = 0;
+      const totalSteps = 15;
+      
+      const snapAnim = setInterval(() => {
+        step++;
+        const currentVal = startVal + (distance * (step / totalSteps));
+        slider.value = currentVal;
+        updateSliderVisuals(currentVal);
+        
+        if (step >= totalSteps) {
+          clearInterval(snapAnim);
+          slider.value = targetVal;
+          updateSliderVisuals(targetVal);
+        }
+      }, 15);
+    }
+
+    slider.addEventListener('change', snapSlider);
+  });
 </script>
 
 </body>

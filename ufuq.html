@@ -156,7 +156,6 @@
     flex-direction: column;
   }
 
-  /* Full screen section layout: each major section acts as a full-viewport page stop */
   .page-section {
     min-height: 100vh;
     display: flex;
@@ -166,17 +165,14 @@
     scroll-margin-top: 40px;
   }
 
-  /* TOP SECTION: Grid (Right: Big Title & Paragraph | Left: Meta Only) */
   .atyaf-top-grid {
     display: grid;
-    /* In RTL: 1fr is the Right column, 440px is the Left column */
     grid-template-columns: 1fr 440px; 
     gap: 80px;
     align-items: center;
     width: 100%;
   }
 
-  /* Right Column (Big Logo & Description Paragraph) */
   .atyaf-main-info {
     display: flex;
     flex-direction: column;
@@ -213,7 +209,6 @@
     font-weight: 700;
   }
 
-  /* Left Column (Meta Column Only) */
   .secondary-col {
     display: flex;
     flex-direction: column;
@@ -222,7 +217,6 @@
     height: 100%;
   }
 
-  /* Meta block */
   .atyaf-meta-side {
     display: flex;
     flex-direction: column;
@@ -248,7 +242,6 @@
     color: #c1d82f;
   }
 
-  /* ---------- COMBINED SECTION 2: INFO & SLIDERS ---------- */
   .combined-top-section {
     display: flex;
     flex-direction: column;
@@ -256,7 +249,6 @@
     width: 100%;
   }
 
-  /* ---------- SLIDERS SECTION ---------- */
   .sliders-section {
     display: flex;
     flex-direction: column;
@@ -330,7 +322,6 @@
     border: none;
   }
 
-  /* ---------- COLOR PALETTE SECTION (FULL WIDTH) ---------- */
   .color-palette-container {
     width: 100%;
     max-width: 100%;
@@ -345,7 +336,6 @@
     object-fit: contain;
   }
 
-  /* ---------- BOTTOM BRANDING SHOWCASE ---------- */
   .bottom-branding-showcase {
     display: flex;
     flex-direction: column;
@@ -461,7 +451,6 @@
     letter-spacing: 1px;
   }
 
-  /* ---------- FOOTER ---------- */
   footer {
     background: #000000;
     color: #bfd730;
@@ -500,7 +489,11 @@
 
   @media (max-width: 1024px) {
     .atyaf-top-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
+    }
+    .atyaf-main-info > div[style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+      gap: 40px !important;
     }
     .secondary-col {
       order: 2;
@@ -525,17 +518,49 @@
       text-align: right;
     }
   }
+
+  @media (max-width: 768px) {
+    .nav {
+      gap: 20px;
+      font-size: 20px;
+      flex-wrap: wrap;
+    }
+    .nav-group {
+      gap: 20px;
+    }
+    .atyaf-desc {
+      font-size: 26px;
+    }
+    .meta-value-side {
+      font-size: 50px;
+    }
+    .quote-arabic-huge {
+      font-size: 36px;
+      min-height: 3.5em;
+    }
+    .font-name-title {
+      font-size: 32px;
+    }
+    .alphabet-row {
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
+    .dynamic-abjad-preview {
+      font-size: 60px;
+    }
+    .slider-label-row {
+      font-size: 24px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- Full-screen Loading Overlay -->
 <div id="page-loader" class="loader-overlay">
   <img src="images/3dgifmaker89467.gif" alt="Loading..." class="loader-gif">
 </div>
 
 <div class="hero-wrapper reveal">
-  <!-- NAV BAR -->
   <header>
     <nav class="nav">
       <div class="nav-group">
@@ -557,14 +582,11 @@
 
 <main class="atyaf-container">
 
-  <!-- PAGE SECTION 1: COMBINED INFO & NON-INTERACTIVE SLIDERS -->
   <section class="page-section">
     <div class="combined-top-section reveal">
       
-      <!-- Top Grid: Description, Logo, Meta (Assets removed) -->
       <div class="atyaf-top-grid" style="grid-template-columns: 1fr;">
         
-        <!-- RIGHT: Big Logo & Paragraph -->
         <div class="atyaf-main-info" style="align-items: center; text-align: center;">
           <img src="images/ufuq.png" alt="Ufuq Logo" class="big-atyaf-logo" style="max-width: 100%; width: 100%;">
           
@@ -573,9 +595,7 @@
               أفق للدراسات والاستشارات المعمارية هو استوديو معماري سعودي متخصص في تصميم وتطوير المشاريع السكنية والتجارية، يركز على تقديم حلول معمارية تجمع بين الرؤية الواضحة، والتخطيط المدروس، والدقة في التفاصيل، وجودة التنفيذ. نسعى أفق إلى ابتكار مساحات موازنة تستجيب لاحتياجات المشروع وتمنح المستخدم تجربة مكانية مدروسة، مع اهتمام بالهوية المعمارية وانسجام الشكل والوظيفة. وينعكس استوديو مقروء «أفق» من خلال التطلع نحو المستقبل وتحويل الأفكار (Concept) وأوراق إلى مساحات ملموسة تحمل قيمة تحاكي الحاضر. هذا المشروع هو مفهوم تصميمي لهوية بصرية مقترحة، وليس هوية لشركة حقيقية.
             </p>
 
-            <!-- LEFT: Meta Column Only -->
             <div class="secondary-col" style="justify-content: flex-start; height: auto;">
-              <!-- Meta block -->
               <div class="atyaf-meta-side">
                 <div class="meta-item-side">
                   <span class="meta-label-side">قطاع:</span>
@@ -592,7 +612,6 @@
 
       </div>
 
-      <!-- Non-Interactive Sliders updated with the exact new values/labels from the reference image -->
       <div class="sliders-section">
         <div class="slider-row">
           <div class="slider-label-row">
@@ -628,14 +647,12 @@
     </div>
   </section>
 
-  <!-- PAGE SECTION 2: COLOR PALETTE (FULL WIDTH) -->
   <section class="page-section">
     <div class="color-palette-container reveal">
       <img src="images/ufuqpallete.png" alt="Ufuq Palette">
     </div>
   </section>
 
-  <!-- PAGE SECTION 3: BOTTOM BRANDING SHOWCASE (TYPOGRAPHY / FONT SPEC) -->
   <section class="page-section">
     <div class="bottom-branding-showcase reveal">
       <h2 class="quote-arabic-huge" id="typewriterHeading">حيث تتجسد الرؤية<span class="typewriter-cursor">&nbsp;</span></h2>
@@ -664,7 +681,6 @@
 
 </main>
 
-<!-- FOOTER SECTION -->
 <footer id="contact">
   <img src="images/logog.svg" alt="" class="footer-bg-logo">
 
@@ -685,8 +701,8 @@
 </footer>
 
 <script>
-  /* Loader & Smooth Page Transition Script */
   document.addEventListener("DOMContentLoaded", function() {
+    /* Loader & Smooth Page Transition Script */
     const loader = document.getElementById('page-loader');
 
     window.addEventListener("pageshow", function(event) {
@@ -734,49 +750,38 @@
       observer.observe(revealEl);
     });
 
-    /* Typewriter & Backspace Loop Animation for Heading with "حيث تتجسد الرؤية" */
+    /* Typewriter Loop Animation */
     const headingEl = document.getElementById('typewriterHeading');
-    const texts = [
-      "حيث تتجسد الرؤية"
-    ];
-    
-    let currentTextIndex = 0;
-    
-    function runTypewriterLoop() {
-      const fullHtml = texts[currentTextIndex];
-      const cleanText = fullHtml.replace(/<br>/g, '\n');
-      let charIndex = cleanText.length;
+    const phrases = ["حيث تتجسد الرؤية", "Where vision takes shape"];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+      const currentPhrase = phrases[phraseIndex];
       
-      function backspace() {
-        if (charIndex > 0) {
-          charIndex--;
-          let currentClean = cleanText.substring(0, charIndex);
-          headingEl.innerHTML = currentClean.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
-          setTimeout(backspace, 35);
-        } else {
-          currentTextIndex = (currentTextIndex + 1) % texts.length;
-          setTimeout(typeForward, 400);
-        }
+      if (isDeleting) {
+        headingEl.innerHTML = currentPhrase.substring(0, charIndex - 1) + '<span class="typewriter-cursor">&nbsp;</span>';
+        charIndex--;
+      } else {
+        headingEl.innerHTML = currentPhrase.substring(0, charIndex + 1) + '<span class="typewriter-cursor">&nbsp;</span>';
+        charIndex++;
       }
 
-      const targetClean = texts[currentTextIndex].replace(/<br>/g, '\n');
-      let typeIndex = 0;
-      
-      function typeForward() {
-        if (typeIndex <= targetClean.length) {
-          let currentStr = targetClean.substring(0, typeIndex);
-          headingEl.innerHTML = currentStr.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
-          typeIndex++;
-          setTimeout(typeForward, 75);
-        } else {
-          setTimeout(backspace, 3000);
-        }
+      let speed = isDeleting ? 30 : 70;
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        speed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        speed = 500;
       }
 
-      setTimeout(backspace, 3000);
+      setTimeout(type, speed);
     }
-
-    setTimeout(runTypewriterLoop, 1500);
+    type();
 
     /* Automatic Font Weight Cycling Animation */
     const abjadPreview = document.getElementById('dynamicAbjadText');
