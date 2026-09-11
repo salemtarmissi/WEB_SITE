@@ -15,19 +15,12 @@
     --paper: #c1d82f;
   }
 
-  /* Custom Scrollbar */
+  /* Make Scrollbar Invisible */
   ::-webkit-scrollbar {
-    width: 14px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #000000;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #c1d831;
+    display: none;
   }
   html {
-    scrollbar-color: #c1d831 #000000;
-    scrollbar-width: auto;
+    scrollbar-width: none;
   }
 
   * { box-sizing: border-box; }
@@ -47,6 +40,45 @@
     overflow-x: hidden;
   }
 
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* English Language Direction Overrides (Text alignments only, layout positions stay locked) */
+  body.lang-en {
+    direction: ltr;
+    text-align: left;
+  }
+
+  body.lang-en .atyaf-main-info {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  body.lang-en .atyaf-desc {
+    text-align: justify;
+  }
+
+  body.lang-en .other-elements-title {
+    text-align: left;
+  }
+
+  body.lang-en .atyaf-meta-side {
+    text-align: left;
+  }
+
+  body.lang-en .font-info-col {
+    text-align: left;
+  }
+
+  body.lang-en .font-name-title {
+    text-align: left;
+  }
+
+  body.lang-en .footer-block.footer-right {
+    text-align: right;
+  }
+
   a { color: inherit; text-decoration: none; }
   img, video { max-width: 100%; height: auto; display: block; }
 
@@ -63,6 +95,125 @@
     transform: translateY(0);
   }
 
+  /* ---------- TOP FLOATING HEADER BAR (MOBILE ONLY) ---------- */
+  .top-header-bar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #000000;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .top-header-bar.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1024px) {
+    .top-header-bar {
+      display: block;
+    }
+  }
+
+  .hamburger-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1150;
+    padding: 15px;
+  }
+
+  .hamburger-icon {
+    width: 40px;  
+    height: 30px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+  }
+
+  .hamburger-icon span {
+    display: block;
+    height: 4px;  
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger-container.active .hamburger-icon span:nth-child(1) {
+    transform: translateY(13px) rotate(45deg);
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(3) {
+    transform: translateY(-13px) rotate(-45deg);
+  }
+
+  /* ---------- FULLSCREEN MOBILE MENU OVERLAY ---------- */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .mobile-menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .overlay-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  body.lang-en .overlay-top-bar {
+    flex-direction: row-reverse;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-links a {
+    font-size: 38px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav-links a:hover {
+    color: #c1d82f;
+  }
+
   /* ---------- NAV BAR ---------- */
   .hero-wrapper {
     display: flex;
@@ -70,6 +221,12 @@
     padding: 25px 5vw;
     position: relative;
     overflow: hidden;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-wrapper.desktop-nav-wrapper {
+      display: none; 
+    }
   }
 
   header {
@@ -84,6 +241,14 @@
     gap: 50px;
     font-size: 26px;
     font-weight: 400;
+  }
+
+  .top-header-bar .nav {
+    justify-content: space-between;
+  }
+
+  body.lang-en .top-header-bar .nav {
+    flex-direction: row-reverse;
   }
 
   .nav-group {
@@ -107,7 +272,7 @@
   }
 
   .nav .logo-container img {
-    height: 45px;
+    height: 55px; 
     width: auto;
     object-fit: contain;
   }
@@ -117,9 +282,15 @@
     width: 100%;
     max-width: 2000px;
     margin: 0 auto;
-    padding: 10px 5vw 100px 5vw;
+    padding: 40px 5vw 100px 5vw;
     display: flex;
     flex-direction: column;
+  }
+
+  @media (max-width: 1024px) {
+    .atyaf-container {
+      padding-top: 65px; 
+    }
   }
 
   /* Full screen section layout: each major section acts as a full-viewport page stop */
@@ -130,6 +301,14 @@
     justify-content: center;
     padding: 80px 0;
     scroll-margin-top: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    .page-section:first-of-type {
+      min-height: auto;
+      padding-top: 45px;
+      padding-bottom: 60px;
+    }
   }
 
   /* TOP SECTION: Grid (Right: Big Title & Paragraph | Left: Secondary Assets & Meta) */
@@ -528,6 +707,7 @@
     position: relative;
     overflow: hidden;
     z-index: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .footer-bg-logo {
@@ -556,6 +736,59 @@
     z-index: 2;
   }
 
+  .footer-block { text-align: inherit; }
+
+  .footer-left .name {
+    font-weight: 800;
+    font-size: clamp(30px, 3.3vw, 39px);
+    margin: 0 0 6px;
+    color: #c1d82f;
+  }
+
+  .footer-left .title-text {
+    margin: 0;
+    font-size: clamp(21px, 2.1vw, 25.5px);
+    font-weight: 500;
+    color: #c1d82f;
+  }
+
+  .footer-left .links {
+    margin-top: 36px;
+    font-weight: 700;
+    font-size: clamp(22.5px, 2.25vw, 27px);
+    color: #c1d82f;
+  }
+
+  .footer-left .links a {
+    text-decoration: none;
+    text-underline-offset: 6px;
+    color: inherit;
+    transition: text-decoration-line 0.2s ease;
+  }
+
+  .footer-left .links a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+
+  .footer-right h4 {
+    margin: 0 0 24px;
+    font-size: clamp(42px, 6.3vw, 72px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #c1d82f;
+  }
+
+  .footer-right p {
+    margin: 0;
+    font-size: 21px;
+    opacity: 0.85;
+    color: #ffffff;
+  }
+
   /* Responsive adjustments */
   @media (max-width: 1024px) {
     .atyaf-top-grid {
@@ -574,35 +807,93 @@
       min-height: auto;
       padding: 60px 0;
     }
-    .footer-inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 40px;
+  }
+
+  @media (max-width: 768px) {
+    footer { 
+      padding: 48px 20px; 
     }
-    .footer-block.footer-right {
-      text-align: right;
+    .footer-inner {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .footer-right {
+      text-align: right; 
+    }
+    .footer-right h4 { 
+      font-size: 36px; 
+      line-height: 1.25;
+    }
+    .footer-left .links {
+      font-size: 18px;
+      margin-top: 24px;
     }
   }
 </style>
 </head>
 <body>
 
-<div class="hero-wrapper reveal">
-  <!-- NAV BAR -->
+<!-- TOP FLOATING HEADER BAR (MOBILE ONLY) -->
+<div class="top-header-bar" id="topHeaderBar">
+  <div class="hero-wrapper" style="padding: 15px 5vw;">
+    <header>
+      <nav class="nav">
+        <div class="hamburger-container hamburger-trigger" aria-label="Menu">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="logo-container">
+          <a href="https://salemtarmissi.com/"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
+        </div>
+      </nav>
+    </header>
+  </div>
+</div>
+
+<!-- FULLSCREEN MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <div class="overlay-top-bar">
+    <div class="hamburger-container hamburger-trigger active" aria-label="Close Menu">
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="logo-container" style="padding: 0 15px;">
+      <a href="https://salemtarmissi.com/"><img src="images/salemgreen.svg" alt="Salem Green Logo" style="height: 55px; width: auto; object-fit: contain;"></a>
+    </div>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="https://salemtarmissi.com/#portfolio" class="mobile-link" data-i18n="nav_portfolio">أعمالي</a></li>
+    <li><a href="https://salemtarmissi.com/#about" class="mobile-link" data-i18n="nav_about">عني</a></li>
+    <li><a href="#" class="mobile-link lang-toggle" data-i18n="nav_lang">English</a></li>
+    <li><a href="https://salemtarmissi.com/#contact" class="mobile-link" data-i18n="nav_contact">تواصل</a></li>
+  </ul>
+</div>
+
+<!-- DESKTOP NAV BAR -->
+<div class="hero-wrapper desktop-nav-wrapper reveal">
   <header>
     <nav class="nav">
       <div class="nav-group">
-        <a href="index.html#portfolio">أعمالي</a>
-        <a href="index.html#about">عني</a>
+        <a href="https://salemtarmissi.com/#portfolio" data-i18n="nav_portfolio">أعمالي</a>
+        <a href="https://salemtarmissi.com/#about" data-i18n="nav_about">عني</a>
       </div>
 
       <div class="logo-container">
-        <a href="index.html"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
+        <a href="https://salemtarmissi.com/"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
       </div>
 
       <div class="nav-group">
-        <a href="#" class="lang-toggle">English</a>
-        <a href="index.html#contact">تواصل</a>
+        <a href="#" class="lang-toggle" data-i18n="nav_lang">English</a>
+        <a href="https://salemtarmissi.com/#contact" data-i18n="nav_contact">تواصل</a>
       </div>
     </nav>
   </header>
@@ -621,7 +912,7 @@
         <div class="atyaf-main-info">
           <img src="images/atyaf.png" alt="Atyaf Logo Gold" class="big-atyaf-logo">
           
-          <p class="atyaf-desc">
+          <p class="atyaf-desc" data-i18n="hero_desc">
             أطياف للتطوير والاستثمار العقاري هي شركة متخصصة في تطوير المشاريع السكنية والتجارية <span class="highlight">في الرياض والدمام</span>، بخبرة تمتد عبر <span class="highlight">18 مشروعاً ناجحاً</span>. تركز الشركة على تقديم مشاريع تجمع بين <span class="highlight">التصميم العصري</span>، والتخطيط الذكي، والمواقع الحيوية، وجودة التنفيذ، مع تجربة واضحة وموثوقة تمتد من الاستفسار حتي استلام العقار. وتسعى أطياف إلى بناء قيمة حقيقية لعملائها من خلال حلول عقارية مدروسة، تجمع بين احتياجاتهم الحالية وتطلعاتهم المستقبلية.
           </p>
         </div>
@@ -629,7 +920,7 @@
         <!-- LEFT: Secondary Assets & Meta Column -->
         <div class="secondary-col">
           <div class="other-elements-wrapper">
-            <div class="other-elements-title">عناصر أخرى</div>
+            <div class="other-elements-title" data-i18n="other_elements">عناصر أخرى</div>
             <div class="elements-grid">
               <div class="element-box"><img src="images/Asset 33.png" alt="Asset 33"></div>
               <div class="element-box"><img src="images/atyaf_min_1.png" alt="atyaf_min_1"></div>
@@ -642,11 +933,11 @@
           <!-- Meta block -->
           <div class="atyaf-meta-side">
             <div class="meta-item-side">
-              <span class="meta-label-side">قطاع:</span>
-              <span class="meta-value-side">العقارات</span>
+              <span class="meta-label-side" data-i18n="meta_sector_label">قطاع:</span>
+              <span class="meta-value-side" data-i18n="meta_sector_value">العقارات</span>
             </div>
             <div class="meta-item-side">
-              <span class="meta-label-side">السنة:</span>
+              <span class="meta-label-side" data-i18n="meta_year_label">السنة:</span>
               <span class="meta-value-side">2026</span>
             </div>
           </div>
@@ -658,8 +949,8 @@
       <div class="sliders-section">
         <div class="slider-row">
           <div class="slider-label-row">
-            <span>تقليدي</span>
-            <span class="sub-label" style="color: #c1d82f;">معاصر</span>
+            <span data-i18n="slider_1_left">تقليدي</span>
+            <span class="sub-label" style="color: #c1d82f;" data-i18n="slider_1_right">معاصر</span>
           </div>
           <div class="custom-range-track">
             <input type="range" min="0" max="100" value="50" disabled>
@@ -668,8 +959,8 @@
 
         <div class="slider-row">
           <div class="slider-label-row">
-            <span>رسمي</span>
-            <span class="sub-label" style="color: #c1d82f;">ودود</span>
+            <span data-i18n="slider_2_left">رسمي</span>
+            <span class="sub-label" style="color: #c1d82f;" data-i18n="slider_2_right">ودود</span>
           </div>
           <div class="custom-range-track">
             <input type="range" min="0" max="100" value="15" disabled>
@@ -678,8 +969,8 @@
 
         <div class="slider-row">
           <div class="slider-label-row">
-            <span>هادئ</span>
-            <span class="sub-label" style="color: #c1d82f;">جريء</span>
+            <span data-i18n="slider_3_left">هادئ</span>
+            <span class="sub-label" style="color: #c1d82f;" data-i18n="slider_3_right">جريء</span>
           </div>
           <div class="custom-range-track">
             <input type="range" min="0" max="100" value="30" disabled>
@@ -710,7 +1001,7 @@
         <div class="custom-range-track">
           <input type="range" id="interactiveRhombusSlider" min="0" max="100" value="50">
         </div>
-        <div class="slider-instruction">اضغط وحرك !</div>
+        <div class="slider-instruction" data-i18n="slider_instruction">اضغط وحرك !</div>
       </div>
     </div>
   </section>
@@ -725,18 +1016,18 @@
           <h3 class="font-name-title">IBM Plex Sans Arabic / آي بي إم بليكس سانس عربي</h3>
           
           <div class="font-alphabet-display">
-            <div class="alphabet-row">أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ</div>
+            <div class="alphabet-row" id="arabicAlphabetRow">أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ</div>
             <div class="alphabet-row english-row">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
           </div>
 
           <p class="font-weights-list">
-            Weights: <span>Light (300), Regular (400), Medium (500), SemiBold (600), Bold (700)</span>
+            Weights: <span data-i18n="font_weights">Light (300), Regular (400), Medium (500), SemiBold (600), Bold (700)</span>
           </p>
         </div>
 
         <div class="font-preview-col">
-          <div class="dynamic-abjad-preview" id="dynamicAbjadText">أبجد</div>
-          <div class="dynamic-weight-indicator" id="dynamicWeightLabel">Weight: Regular (400)</div>
+          <div class="dynamic-abjad-preview" id="dynamicAbjadText" data-ar="أبجد" data-en="Abc">أبجد</div>
+          <div class="dynamic-weight-indicator" id="dynamicWeightLabel" data-i18n="weight_indicator">Weight: Regular (400)</div>
         </div>
       </div>
     </div>
@@ -753,7 +1044,7 @@
       <p class="name" data-i18n="footer_name">سالم الطرميسي</p>
       <p class="title-text" data-i18n="footer_title">مصمم هويات بصرية</p>
       <p class="links">
-        <a href="#">Instagram</a> • <a href="#">Behance</a> • <a href="#">Email</a>
+        <a href="https://www.instagram.com/salemtarmissi/" target="_blank" rel="noopener noreferrer">Instagram</a> • <a href="https://www.behance.net/salemtarmissi" target="_blank" rel="noopener noreferrer">Behance</a> • <a href="mailto:octupi.graphics@gmail.com">Email</a>
       </p>
     </div>
 
@@ -765,8 +1056,54 @@
 </footer>
 
 <script>
-  /* Intersection Observer for Fade-In Slide-Up Reveal on Scroll */
   document.addEventListener("DOMContentLoaded", function() {
+    /* Mobile Menu Toggle Logic */
+    const hamburgerTriggers = document.querySelectorAll('.hamburger-trigger');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu() {
+      mobileMenuOverlay.classList.toggle('open');
+      document.body.classList.toggle('menu-open');
+      
+      const isOpen = mobileMenuOverlay.classList.contains('open');
+      hamburgerTriggers.forEach(btn => {
+        if (isOpen) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    hamburgerTriggers.forEach(btn => {
+      btn.addEventListener('click', toggleMenu);
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if(mobileMenuOverlay.classList.contains('open')) {
+          toggleMenu();
+        }
+      });
+    });
+
+    /* Hide Header on Scroll & Show at Top (Mobile Only) */
+    const topHeaderBar = document.getElementById('topHeaderBar');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 50 && currentScrollY > lastScrollY && !mobileMenuOverlay.classList.contains('open')) {
+        topHeaderBar.classList.add('hidden');
+      } else {
+        topHeaderBar.classList.remove('hidden');
+      }
+      lastScrollY = currentScrollY;
+    });
+
+    /* Intersection Observer for Fade-In Slide-Up Reveal on Scroll */
     const reveals = document.querySelectorAll(".reveal");
 
     const revealOnScroll = function(entries, observer) {
@@ -788,36 +1125,94 @@
       observer.observe(revealEl);
     });
 
-    /* Typewriter & Backspace Loop Animation for Heading */
-    const headingEl = document.getElementById('typewriterHeading');
-    const texts = [
+    /* Bilingual Dictionary and Translation Logic */
+    const translations = {
+      ar: {
+        nav_portfolio: "أعمالي",
+        nav_about: "عني",
+        nav_lang: "English",
+        nav_contact: "تواصل",
+        hero_desc: 'أطياف للتطوير والاستثمار العقاري هي شركة متخصصة في تطوير المشاريع السكنية والتجارية <span class="highlight">في الرياض والدمام</span>، بخبرة تمتد عبر <span class="highlight">18 مشروعاً ناجحاً</span>. تركز الشركة على تقديم مشاريع تجمع بين <span class="highlight">التصميم العصري</span>، والتخطيط الذكي، والمواقع الحيوية، وجودة التنفيذ، مع تجربة واضحة وموثوقة تمتد من الاستفسار حتي استلام العقار. وتسعى أطياف إلى بناء قيمة حقيقية لعملائها من خلال حلول عقارية مدروسة، تجمع بين احتياجاتهم الحالية وتطلعاتهم المستقبلية.',
+        other_elements: "عناصر أخرى",
+        meta_sector_label: "قطاع:",
+        meta_sector_value: "العقارات",
+        meta_year_label: "السنة:",
+        slider_1_left: "تقليدي",
+        slider_1_right: "معاصر",
+        slider_2_left: "رسمي",
+        slider_2_right: "ودود",
+        slider_3_left: "هادئ",
+        slider_3_right: "جريء",
+        slider_instruction: "اضغط وحرك !",
+        font_weights: "Light (300), Regular (400), Medium (500), SemiBold (600), Bold (700)",
+        weight_indicator: "Weight: Regular (400)",
+        footer_name: "سالم الطرميسي",
+        footer_title: "مصمم هويات بصرية",
+        footer_cta: "هويتك الجديدة<br>بإنتظارك"
+      },
+      en: {
+        nav_portfolio: "Portfolio",
+        nav_about: "About",
+        nav_lang: "عربي",
+        nav_contact: "Contact",
+        hero_desc: 'Atyaf Real Estate Development and Investment is a company specializing in residential and commercial projects <span class="highlight">in Riyadh and Dammam</span>, with experience spanning over <span class="highlight">18 successful projects</span>. The company focuses on delivering developments that combine <span class="highlight">modern design</span>, smart planning, prime locations, and quality execution, offering a clear and reliable experience from inquiry to property handover. Atyaf strives to build genuine value for its clients through thoughtful real estate solutions that bridge current needs with future aspirations.',
+        other_elements: "Other Elements",
+        meta_sector_label: "Sector:",
+        meta_sector_value: "Real Estate",
+        meta_year_label: "Year:",
+        slider_1_left: "Traditional",
+        slider_1_right: "Contemporary",
+        slider_2_left: "Formal",
+        slider_2_right: "Friendly",
+        slider_3_left: "Calm",
+        slider_3_right: "Bold",
+        slider_instruction: "Click and Drag!",
+        font_weights: "Light (300), Regular (400), Medium (500), SemiBold (600), Bold (700)",
+        weight_indicator: "Weight: Regular (400)",
+        footer_name: "Salem Tarmissi",
+        footer_title: "Brand Identity Designer",
+        footer_cta: "Your New Identity<br>Awaits"
+      }
+    };
+
+    let currentLang = 'ar';
+    const langToggles = document.querySelectorAll('.lang-toggle');
+
+    /* Typewriter Loop Animation Arrays per Language */
+    const typewriterTextsAr = [
       "خبرة تتجسد في المشاريع<br>وثقة تُبنى مع كل عميل.",
-      "آي بي إم بليكس سانس عربي",
+      "آي بي إم بليكس سانس عربي / IBM Plex Sans Arabic",
       "أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ"
     ];
     
+    const typewriterTextsEn = [
+      "Experience embodied in projects<br>and trust built with every client.",
+      "IBM Plex Sans Arabic",
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    ];
+
+    let texts = typewriterTextsAr;
     let currentTextIndex = 0;
-    
+    const headingEl = document.getElementById('typewriterHeading');
+    let typewriterTimeout = null;
+
     function runTypewriterLoop() {
       const fullHtml = texts[currentTextIndex];
       const cleanText = fullHtml.replace(/<br>/g, '\n');
       let charIndex = cleanText.length;
       
-      // Phase 1: Backspace / deleting current text
       function backspace() {
         if (charIndex > 0) {
           charIndex--;
           let currentClean = cleanText.substring(0, charIndex);
           headingEl.innerHTML = currentClean.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
-          setTimeout(backspace, 35);
+          typewriterTimeout = setTimeout(backspace, 35);
         } else {
-          // Switch to next text and wait a moment before typing forward
           currentTextIndex = (currentTextIndex + 1) % texts.length;
-          setTimeout(typeForward, 400);
+          typewriterTimeout = setTimeout(typeForward, 400);
         }
       }
 
-      // Phase 2: Typing forward new text
       const targetClean = texts[currentTextIndex].replace(/<br>/g, '\n');
       let typeIndex = 0;
       
@@ -826,19 +1221,51 @@
           let currentStr = targetClean.substring(0, typeIndex);
           headingEl.innerHTML = currentStr.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
           typeIndex++;
-          setTimeout(typeForward, 50);
+          typewriterTimeout = setTimeout(typeForward, 50);
         } else {
-          // Stay fully written for 3 seconds before starting backspace loop
-          setTimeout(backspace, 3000);
+          typewriterTimeout = setTimeout(backspace, 3000);
         }
       }
 
-      // Initial stay before starting the very first backspace
-      setTimeout(backspace, 3000);
+      typewriterTimeout = setTimeout(backspace, 3000);
     }
 
-    // Initialize typewriter loop
     setTimeout(runTypewriterLoop, 1500);
+
+    langToggles.forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        
+        if (currentLang === 'en') {
+          document.body.classList.add('lang-en');
+          document.documentElement.setAttribute('lang', 'en');
+          document.documentElement.setAttribute('dir', 'ltr');
+          texts = typewriterTextsEn;
+          document.getElementById('arabicAlphabetRow').textContent = "Abcdefghijklmnopqrstuvwxyz";
+          document.getElementById('dynamicAbjadText').textContent = document.getElementById('dynamicAbjadText').getAttribute('data-en');
+        } else {
+          document.body.classList.remove('lang-en');
+          document.documentElement.setAttribute('lang', 'ar');
+          document.documentElement.setAttribute('dir', 'rtl');
+          texts = typewriterTextsAr;
+          document.getElementById('arabicAlphabetRow').textContent = "أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ";
+          document.getElementById('dynamicAbjadText').textContent = document.getElementById('dynamicAbjadText').getAttribute('data-ar');
+        }
+
+        currentTextIndex = 0;
+        clearTimeout(typewriterTimeout);
+        runTypewriterLoop();
+
+        // Update all text elements with data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[currentLang][key]) {
+            el.innerHTML = translations[currentLang][key];
+          }
+        });
+      });
+    });
 
     /* Automatic Font Weight Cycling Animation */
     const abjadPreview = document.getElementById('dynamicAbjadText');

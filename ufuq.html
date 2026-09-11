@@ -12,7 +12,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ufuq — Salem Tarmissi</title>
+<title data-i18n="page_title">أفق — سالم الطرميسي</title>
 <link rel="icon" type="image/svg+xml" href="images/Asset 5.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,6 +81,15 @@
     overflow-x: hidden;
   }
 
+  body.ltr-mode {
+    direction: ltr;
+    text-align: left;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+
   a { color: inherit; text-decoration: none; }
   img, video { max-width: 100%; height: auto; display: block; }
 
@@ -97,6 +106,145 @@
     transform: translateY(0);
   }
 
+  /* ---------- TOP FLOATING HEADER BAR (MOBILE ONLY) ---------- */
+  .top-header-bar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #000000;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .top-header-bar.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1024px) {
+    .top-header-bar {
+      display: block;
+    }
+  }
+
+  .top-header-bar .hero-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5vw;
+  }
+
+  .top-header-bar header {
+    width: 100%;
+  }
+
+  .top-header-bar .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-direction: row !important;
+  }
+
+  .hamburger-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1150;
+    padding: 15px;
+  }
+
+  .hamburger-icon {
+    width: 40px;  
+    height: 30px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+  }
+
+  .hamburger-icon span {
+    display: block;
+    height: 4px;  
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger-container.active .hamburger-icon span:nth-child(1) {
+    transform: translateY(13px) rotate(45deg);
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(3) {
+    transform: translateY(-13px) rotate(-45deg);
+  }
+
+  /* ---------- FULLSCREEN MOBILE MENU OVERLAY ---------- */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .mobile-menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .overlay-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  body.ltr-mode .overlay-top-bar {
+    flex-direction: row-reverse;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-links a {
+    font-size: 38px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav-links a:hover {
+    color: #c1d82f;
+  }
+
   /* ---------- NAV BAR ---------- */
   .hero-wrapper {
     display: flex;
@@ -104,6 +252,12 @@
     padding: 25px 5vw;
     position: relative;
     overflow: hidden;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-wrapper.desktop-nav-wrapper {
+      display: none; 
+    }
   }
 
   header {
@@ -118,6 +272,9 @@
     gap: 50px;
     font-size: 26px;
     font-weight: 400;
+    max-width: 1800px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .nav-group {
@@ -129,6 +286,7 @@
   .nav a {
     opacity: 0.85;
     transition: opacity .2s ease;
+    cursor: pointer;
   }
 
   .nav a:hover { opacity: 1; }
@@ -141,7 +299,7 @@
   }
 
   .nav .logo-container img {
-    height: 45px;
+    height: 55px; 
     width: auto;
     object-fit: contain;
   }
@@ -151,9 +309,15 @@
     width: 100%;
     max-width: 2000px;
     margin: 0 auto;
-    padding: 10px 5vw 100px 5vw;
+    padding: 40px 5vw 100px 5vw;
     display: flex;
     flex-direction: column;
+  }
+
+  @media (max-width: 1024px) {
+    .atyaf-container {
+      padding-top: 65px; 
+    }
   }
 
   .page-section {
@@ -163,6 +327,14 @@
     justify-content: center;
     padding: 80px 0;
     scroll-margin-top: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    .page-section:first-of-type {
+      min-height: auto;
+      padding-top: 45px;
+      padding-bottom: 60px;
+    }
   }
 
   .atyaf-top-grid {
@@ -179,6 +351,11 @@
     align-items: flex-start;
     text-align: right;
     width: 100%;
+  }
+
+  body.ltr-mode .atyaf-main-info {
+    text-align: left;
+    align-items: flex-start;
   }
 
   .big-atyaf-logo {
@@ -204,6 +381,10 @@
     font-weight: 400;
   }
 
+  body.ltr-mode .atyaf-desc {
+    text-align: justify;
+  }
+
   .atyaf-desc span.highlight {
     color: #c1d82f;
     font-weight: 700;
@@ -222,6 +403,10 @@
     flex-direction: column;
     gap: 28px;
     text-align: right;
+  }
+
+  body.ltr-mode .atyaf-meta-side {
+    text-align: left;
   }
 
   .meta-item-side {
@@ -346,13 +531,18 @@
   }
 
   .quote-arabic-huge {
-    font-size: clamp(42px, 5vw, 64px); 
+    font-size: clamp(30px, 4vw, 64px); 
     font-weight: 700;
     text-align: center;
     color: #fff;
     margin: 0 auto;
     line-height: 1.4;
     min-height: 2.8em;
+    width: 100%;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
   }
 
   .typewriter-cursor {
@@ -361,6 +551,11 @@
     background-color: #c1d82f;
     margin-right: 5px;
     animation: blink 0.8s infinite;
+  }
+
+  body.ltr-mode .typewriter-cursor {
+    margin-right: 0;
+    margin-left: 5px;
   }
 
   @keyframes blink {
@@ -383,11 +578,16 @@
     text-align: right;
   }
 
+  body.ltr-mode .font-info-col {
+    text-align: left;
+  }
+
   .font-name-title {
     font-size: 44px;
     font-weight: 700;
     color: #fff;
     margin: 0;
+    word-break: break-word;
   }
 
   .font-alphabet-display {
@@ -402,6 +602,7 @@
     color: #fff;
     letter-spacing: 2px;
     line-height: 1.3;
+    word-break: break-all;
   }
 
   .alphabet-row.english-row {
@@ -415,6 +616,7 @@
     color: #888;
     line-height: 1.6;
     margin: 0;
+    word-wrap: break-word;
   }
 
   .font-weights-list span {
@@ -432,6 +634,8 @@
     border-radius: 16px;
     padding: 60px 40px;
     min-height: 350px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .dynamic-abjad-preview {
@@ -441,6 +645,8 @@
     text-align: center;
     transition: font-weight 0.4s ease;
     margin: 0;
+    word-break: break-all;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
   }
 
   .dynamic-weight-indicator {
@@ -449,16 +655,18 @@
     margin-top: 30px;
     font-weight: 500;
     letter-spacing: 1px;
+    text-align: center;
   }
 
+  /* ---------- FOOTER ---------- */
   footer {
     background: #000000;
-    color: #bfd730;
+    color: #bfd730;      
     padding: clamp(60px, 9vw, 120px) clamp(30px, 8vw, 84px);
     position: relative;
     overflow: hidden;
     z-index: 1;
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .footer-bg-logo {
@@ -487,6 +695,68 @@
     z-index: 2;
   }
 
+  .footer-block { text-align: inherit; }
+
+  body.ltr-mode .footer-block {
+    text-align: left;
+  }
+
+  .footer-left .name {
+    font-weight: 800;
+    font-size: clamp(30px, 3.3vw, 39px);
+    margin: 0 0 6px;
+    color: #c1d82f;
+  }
+
+  .footer-left .title-text {
+    margin: 0;
+    font-size: clamp(21px, 2.1vw, 25.5px);
+    font-weight: 500;
+    color: #c1d82f;
+  }
+
+  .footer-left .links {
+    margin-top: 36px;
+    font-weight: 700;
+    font-size: clamp(22.5px, 2.25vw, 27px);
+    color: #c1d82f;
+    word-break: break-word;
+  }
+
+  .footer-left .links a {
+    text-decoration: none;
+    text-underline-offset: 6px;
+    color: inherit;
+    transition: text-decoration-line 0.2s ease;
+  }
+
+  .footer-left .links a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+
+  body.ltr-mode .footer-right {
+    text-align: right;
+  }
+
+  .footer-right h4 {
+    margin: 0 0 24px;
+    font-size: clamp(42px, 6.3vw, 72px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #c1d82f;
+  }
+
+  .footer-right p {
+    margin: 0;
+    font-size: 21px;
+    opacity: 0.85;
+    color: #ffffff;
+  }
+
   @media (max-width: 1024px) {
     .atyaf-top-grid {
       grid-template-columns: 1fr !important;
@@ -509,47 +779,66 @@
       min-height: auto;
       padding: 60px 0;
     }
-    .footer-inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 40px;
-    }
-    .footer-block.footer-right {
-      text-align: right;
-    }
   }
 
   @media (max-width: 768px) {
     .nav {
+      flex-direction: column;
       gap: 20px;
-      font-size: 20px;
-      flex-wrap: wrap;
+    }
+    .top-header-bar .nav {
+      flex-direction: row;
+      gap: 0;
     }
     .nav-group {
       gap: 20px;
+      font-size: 20px;
     }
     .atyaf-desc {
-      font-size: 26px;
+      font-size: 22px;
+      line-height: 1.6;
     }
     .meta-value-side {
-      font-size: 50px;
+      font-size: 40px;
     }
     .quote-arabic-huge {
-      font-size: 36px;
+      font-size: 24px;
       min-height: 3.5em;
     }
     .font-name-title {
-      font-size: 32px;
+      font-size: 26px;
     }
     .alphabet-row {
-      font-size: 26px;
+      font-size: 20px;
       letter-spacing: 1px;
     }
     .dynamic-abjad-preview {
-      font-size: 60px;
+      font-size: 50px;
     }
     .slider-label-row {
-      font-size: 24px;
+      font-size: 22px;
+    }
+    footer { 
+      padding: 48px 20px; 
+    }
+    .footer-inner {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .footer-right {
+      text-align: right; 
+    }
+    body.ltr-mode .footer-right {
+      text-align: left;
+    }
+    .footer-right h4 { 
+      font-size: 32px; 
+      line-height: 1.25;
+    }
+    .footer-left .links {
+      font-size: 18px;
+      margin-top: 24px;
     }
   }
 </style>
@@ -560,21 +849,66 @@
   <img src="images/3dgifmaker89467.gif" alt="Loading..." class="loader-gif">
 </div>
 
-<div class="hero-wrapper reveal">
+<!-- TOP FLOATING HEADER BAR (MOBILE ONLY) -->
+<div class="top-header-bar" id="topHeaderBar">
+  <div class="hero-wrapper" style="padding: 15px 5vw;">
+    <header>
+      <nav class="nav">
+        <div class="hamburger-container hamburger-trigger" aria-label="Menu">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="logo-container">
+          <a href="index.html"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
+        </div>
+      </nav>
+    </header>
+  </div>
+</div>
+
+<!-- FULLSCREEN MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <div class="overlay-top-bar">
+    <div class="hamburger-container hamburger-trigger active" aria-label="Close Menu">
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="logo-container" style="padding: 0 15px;">
+      <a href="index.html"><img src="images/salemgreen.svg" alt="Salem Green Logo" style="height: 55px; width: auto; object-fit: contain;"></a>
+    </div>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="index.html#portfolio" class="mobile-link" data-i18n="nav_portfolio">أعمالي</a></li>
+    <li><a href="index.html#about" class="mobile-link" data-i18n="nav_about">عني</a></li>
+    <li><a href="#" class="mobile-link lang-toggle" data-i18n="nav_lang">English</a></li>
+    <li><a href="index.html#contact" class="mobile-link" data-i18n="nav_contact">تواصل</a></li>
+  </ul>
+</div>
+
+<!-- DESKTOP NAV BAR -->
+<div class="hero-wrapper desktop-nav-wrapper reveal">
   <header>
     <nav class="nav">
       <div class="nav-group">
-        <a href="index.html#portfolio">أعمالي</a>
-        <a href="index.html#about">عني</a>
+        <a href="index.html#portfolio" data-i18n="nav_portfolio">أعمالي</a>
+        <a href="index.html#about" data-i18n="nav_about">عني</a>
       </div>
 
       <div class="logo-container">
         <a href="index.html"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
       </div>
 
-      <div class="nav-group">
-        <a href="#" class="lang-toggle">English</a>
-        <a href="index.html#contact">تواصل</a>
+      <div class="nav-group" style="justify-content: flex-end;">
+        <a href="#" class="lang-toggle" data-i18n="nav_lang">English</a>
+        <a href="index.html#contact" data-i18n="nav_contact">تواصل</a>
       </div>
     </nav>
   </header>
@@ -590,19 +924,19 @@
         <div class="atyaf-main-info" style="align-items: center; text-align: center;">
           <img src="images/ufuq.png" alt="Ufuq Logo" class="big-atyaf-logo" style="max-width: 100%; width: 100%;">
           
-          <div style="display: grid; grid-template-columns: 1fr 440px; gap: 80px; align-items: start; width: 100%; text-align: right;">
-            <p class="atyaf-desc" style="text-align: justify;">
+          <div style="display: grid; grid-template-columns: 1fr 440px; gap: 80px; align-items: start; width: 100%; text-align: right;" class="content-grid-inner">
+            <p class="atyaf-desc" data-i18n="project_desc" style="text-align: justify;">
               أفق للدراسات والاستشارات المعمارية هو استوديو معماري سعودي متخصص في تصميم وتطوير المشاريع السكنية والتجارية، يركز على تقديم حلول معمارية تجمع بين الرؤية الواضحة، والتخطيط المدروس، والدقة في التفاصيل، وجودة التنفيذ. نسعى أفق إلى ابتكار مساحات موازنة تستجيب لاحتياجات المشروع وتمنح المستخدم تجربة مكانية مدروسة، مع اهتمام بالهوية المعمارية وانسجام الشكل والوظيفة. وينعكس استوديو مقروء «أفق» من خلال التطلع نحو المستقبل وتحويل الأفكار (Concept) وأوراق إلى مساحات ملموسة تحمل قيمة تحاكي الحاضر. هذا المشروع هو مفهوم تصميمي لهوية بصرية مقترحة، وليس هوية لشركة حقيقية.
             </p>
 
             <div class="secondary-col" style="justify-content: flex-start; height: auto;">
               <div class="atyaf-meta-side">
                 <div class="meta-item-side">
-                  <span class="meta-label-side">قطاع:</span>
-                  <span class="meta-value-side">إستشارات عقارية</span>
+                  <span class="meta-label-side" data-i18n="meta_sector_label">قطاع:</span>
+                  <span class="meta-value-side" data-i18n="meta_sector_value">إستشارات عقارية</span>
                 </div>
                 <div class="meta-item-side">
-                  <span class="meta-label-side">السنة:</span>
+                  <span class="meta-label-side" data-i18n="meta_year_label">السنة:</span>
                   <span class="meta-value-side">2026</span>
                 </div>
               </div>
@@ -615,8 +949,8 @@
       <div class="sliders-section">
         <div class="slider-row">
           <div class="slider-label-row">
-            <span>تقليدي</span>
-            <span class="sub-label" style="color: #c1d82f;">معاصر</span>
+            <span data-i18n="slider_1_left">تقليدي</span>
+            <span class="sub-label" style="color: #c1d82f;" data-i18n="slider_1_right">معاصر</span>
           </div>
           <div class="custom-range-track">
             <input type="range" min="0" max="100" value="35" disabled>
@@ -625,8 +959,8 @@
 
         <div class="slider-row">
           <div class="slider-label-row">
-            <span>رسمي</span>
-            <span class="sub-label" style="color: #c1d82f;">ودود</span>
+            <span data-i18n="slider_2_left">رسمي</span>
+            <span class="sub-label" style="color: #c1d82f;" data-i18n="slider_2_right">ودود</span>
           </div>
           <div class="custom-range-track">
             <input type="range" min="0" max="100" value="78" disabled>
@@ -635,8 +969,8 @@
 
         <div class="slider-row">
           <div class="slider-label-row">
-            <span>هادئ</span>
-            <span class="sub-label" style="color: #c1d82f;">حركي</span>
+            <span data-i18n="slider_3_left">هادئ</span>
+            <span class="sub-label" style="color: #c1d82f;" data-i18n="slider_3_right">حركي</span>
           </div>
           <div class="custom-range-track">
             <input type="range" min="0" max="100" value="60" disabled>
@@ -672,7 +1006,7 @@
         </div>
 
         <div class="font-preview-col">
-          <div class="dynamic-abjad-preview" id="dynamicAbjadText">أبجد</div>
+          <div class="dynamic-abjad-preview" id="dynamicAbjadText" data-i18n="preview_text">أبجد</div>
           <div class="dynamic-weight-indicator" id="dynamicWeightLabel">Weight: Regular (400)</div>
         </div>
       </div>
@@ -702,6 +1036,52 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+    /* Mobile Menu Toggle Logic */
+    const hamburgerTriggers = document.querySelectorAll('.hamburger-trigger');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu() {
+      mobileMenuOverlay.classList.toggle('open');
+      document.body.classList.toggle('menu-open');
+      
+      const isOpen = mobileMenuOverlay.classList.contains('open');
+      hamburgerTriggers.forEach(btn => {
+        if (isOpen) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    hamburgerTriggers.forEach(btn => {
+      btn.addEventListener('click', toggleMenu);
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if(mobileMenuOverlay.classList.contains('open')) {
+          toggleMenu();
+        }
+      });
+    });
+
+    /* Hide Header on Scroll & Show at Top (Mobile Only) */
+    const topHeaderBar = document.getElementById('topHeaderBar');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 50 && currentScrollY > lastScrollY && !mobileMenuOverlay.classList.contains('open')) {
+        topHeaderBar.classList.add('hidden');
+      } else {
+        topHeaderBar.classList.remove('hidden');
+      }
+      lastScrollY = currentScrollY;
+    });
+
     /* Loader & Smooth Page Transition Script */
     const loader = document.getElementById('page-loader');
 
@@ -709,7 +1089,7 @@
       loader.classList.remove('active');
     });
 
-    const internalLinks = document.querySelectorAll('a');
+    const internalLinks = document.querySelectorAll('a:not(.lang-toggle)');
 
     internalLinks.forEach(link => {
       link.addEventListener('click', function(e) {
@@ -750,14 +1130,104 @@
       observer.observe(revealEl);
     });
 
+    /* Multi-language Dictionary & Switching Logic */
+    const translations = {
+      ar: {
+        page_title: "أفق — سالم الطرميسي",
+        nav_portfolio: "أعمالي",
+        nav_about: "عني",
+        nav_lang: "English",
+        nav_contact: "تواصل",
+        project_desc: "أفق للدراسات والاستشارات المعمارية هو استوديو معماري سعودي متخصص في تصميم وتطوير المشاريع السكنية والتجارية، يركز على تقديم حلول معمارية تجمع بين الرؤية الواضحة، والتخطيط المدروس، والدقة في التفاصيل، وجودة التنفيذ. نسعى أفق إلى ابتكار مساحات موازنة تستجيب لاحتياجات المشروع وتمنح المستخدم تجربة مكانية مدروسة، مع اهتمام بالهوية المعمارية وانسجام الشكل والوظيفة. وينعكس استوديو مقروء «أفق» من خلال التطلع نحو المستقبل وتحويل الأفكار (Concept) وأوراق إلى مساحات ملموسة تحمل قيمة تحاكي الحاضر. هذا المشروع هو مفهوم تصميمي لهوية بصرية مقترحة، وليس هوية لشركة حقيقية.",
+        meta_sector_label: "قطاع:",
+        meta_sector_value: "إستشارات عقارية",
+        meta_year_label: "السنة:",
+        slider_1_left: "تقليدي",
+        slider_1_right: "معاصر",
+        slider_2_left: "رسمي",
+        slider_2_right: "ودود",
+        slider_3_left: "هادئ",
+        slider_3_right: "حركي",
+        footer_name: "سالم الطرميسي",
+        footer_title: "مصمم هويات بصرية",
+        footer_cta: "هويتك الجديدة<br>بإنتظارك",
+        preview_text: "أبجد"
+      },
+      en: {
+        page_title: "Ufuq — Salem Tarmissi",
+        nav_portfolio: "Portfolio",
+        nav_about: "About",
+        nav_lang: "العربية",
+        nav_contact: "Contact",
+        project_desc: "Ufuq Architectural Studies & Consultancies is a Saudi architectural studio specializing in the design and development of residential and commercial projects. It focuses on providing architectural solutions that combine clear vision, thoughtful planning, attention to detail, and quality execution. Ufuq strives to create balanced spaces that respond to project needs and provide users with a well-studied spatial experience, emphasizing architectural identity and the harmony of form and function. The Ufuq studio identity reflects looking towards the future and transforming concepts and papers into tangible spaces carrying contemporary value. This project is a conceptual design proposal for visual identity and not a real corporate identity.",
+        meta_sector_label: "Sector:",
+        meta_sector_value: "Real Estate Consultancies",
+        meta_year_label: "Year:",
+        slider_1_left: "Traditional",
+        slider_1_right: "Contemporary",
+        slider_2_left: "Formal",
+        slider_2_right: "Friendly",
+        slider_3_left: "Calm",
+        slider_3_right: "Dynamic",
+        footer_name: "Salem Tarmissi",
+        footer_title: "Brand Identity Designer",
+        footer_cta: "Your New Identity<br>Awaits",
+        preview_text: "Abc"
+      }
+    };
+
+    let currentLang = 'ar';
+    const langToggles = document.querySelectorAll('.lang-toggle');
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+      if (lang === 'en') {
+        document.body.classList.add('ltr-mode');
+      } else {
+        document.body.classList.remove('ltr-mode');
+      }
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+          el.innerHTML = t[key];
+        }
+      });
+
+      // Update typewriter phrases based on language and restart animation safely
+      phrases.length = 0;
+      if (lang === 'ar') {
+        phrases.push("حيث تتجسد الرؤية");
+      } else {
+        phrases.push("Where vision takes shape");
+      }
+      phraseIndex = 0;
+      charIndex = 0;
+      isDeleting = false;
+    }
+
+    langToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newLang = currentLang === 'ar' ? 'en' : 'ar';
+        switchLanguage(newLang);
+      });
+    });
+
     /* Typewriter Loop Animation */
     const headingEl = document.getElementById('typewriterHeading');
-    const phrases = ["حيث تتجسد الرؤية", "Where vision takes shape"];
+    const phrases = ["حيث تتجسد الرؤية"];
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
 
     function type() {
+      if (phrases.length === 0) return;
       const currentPhrase = phrases[phraseIndex];
       
       if (isDeleting) {

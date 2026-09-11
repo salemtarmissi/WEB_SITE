@@ -51,19 +51,12 @@
     --paper: #c1d82f;
   }
 
-  /* Custom Scrollbar */
+  /* Make Scrollbar Invisible */
   ::-webkit-scrollbar {
-    width: 14px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #000000;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #c1d831;
+    display: none;
   }
   html {
-    scrollbar-color: #c1d831 #000000;
-    scrollbar-width: auto;
+    scrollbar-width: none;
   }
 
   * { box-sizing: border-box; }
@@ -83,6 +76,45 @@
     overflow-x: hidden;
   }
 
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* English Language Direction Overrides (Text alignments only, layout positions stay locked) */
+  body.lang-en {
+    direction: ltr;
+    text-align: left;
+  }
+
+  body.lang-en .rowad-main-info {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  body.lang-en .rowad-desc {
+    text-align: justify;
+  }
+
+  body.lang-en .other-elements-title {
+    text-align: left;
+  }
+
+  body.lang-en .rowad-meta-side {
+    text-align: left;
+  }
+
+  body.lang-en .font-info-col {
+    text-align: left;
+  }
+
+  body.lang-en .font-name-title {
+    text-align: left;
+  }
+
+  body.lang-en .footer-block.footer-right {
+    text-align: right;
+  }
+
   a { color: inherit; text-decoration: none; }
   img, video { max-width: 100%; height: auto; display: block; }
 
@@ -99,6 +131,125 @@
     transform: translateY(0);
   }
 
+  /* ---------- TOP FLOATING HEADER BAR (MOBILE ONLY) ---------- */
+  .top-header-bar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #000000;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .top-header-bar.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1024px) {
+    .top-header-bar {
+      display: block;
+    }
+  }
+
+  .hamburger-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1150;
+    padding: 15px;
+  }
+
+  .hamburger-icon {
+    width: 40px;  
+    height: 30px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+  }
+
+  .hamburger-icon span {
+    display: block;
+    height: 4px;  
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger-container.active .hamburger-icon span:nth-child(1) {
+    transform: translateY(13px) rotate(45deg);
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(3) {
+    transform: translateY(-13px) rotate(-45deg);
+  }
+
+  /* ---------- FULLSCREEN MOBILE MENU OVERLAY ---------- */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .mobile-menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .overlay-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  body.lang-en .overlay-top-bar {
+    flex-direction: row-reverse;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-links a {
+    font-size: 38px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav-links a:hover {
+    color: #c1d82f;
+  }
+
   /* ---------- NAV BAR ---------- */
   .hero-wrapper {
     display: flex;
@@ -106,6 +257,12 @@
     padding: 25px 5vw;
     position: relative;
     overflow: hidden;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-wrapper.desktop-nav-wrapper {
+      display: none; 
+    }
   }
 
   header {
@@ -120,6 +277,14 @@
     gap: 50px;
     font-size: 26px;
     font-weight: 400;
+  }
+
+  .top-header-bar .nav {
+    justify-content: space-between;
+  }
+
+  body.lang-en .top-header-bar .nav {
+    flex-direction: row-reverse;
   }
 
   .nav-group {
@@ -143,7 +308,7 @@
   }
 
   .nav .logo-container img {
-    height: 45px;
+    height: 55px; 
     width: auto;
     object-fit: contain;
   }
@@ -153,9 +318,15 @@
     width: 100%;
     max-width: 2000px;
     margin: 0 auto;
-    padding: 10px 5vw 100px 5vw;
+    padding: 40px 5vw 100px 5vw;
     display: flex;
     flex-direction: column;
+  }
+
+  @media (max-width: 1024px) {
+    .rowad-container {
+      padding-top: 65px; 
+    }
   }
 
   .page-section {
@@ -167,7 +338,15 @@
     scroll-margin-top: 40px;
   }
 
-  /* TOP SECTION: Grid */
+  @media (max-width: 1024px) {
+    .page-section:first-of-type {
+      min-height: auto;
+      padding-top: 45px;
+      padding-bottom: 60px;
+    }
+  }
+
+  /* TOP SECTION: Grid (Explicitly locked: Main info left, Secondary column right) */
   .rowad-top-grid {
     display: grid;
     grid-template-columns: 1fr 440px; 
@@ -177,10 +356,22 @@
   }
 
   .rowad-main-info {
+    grid-column: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: right;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .secondary-col {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .big-rowad-logo {
@@ -188,7 +379,7 @@
     max-width: 1150px;
     height: auto;
     object-fit: contain;
-    margin-bottom: 45px;
+    margin-bottom: 35px;
     transition: filter 0.3s ease;
   }
 
@@ -198,24 +389,20 @@
 
   .rowad-desc {
     width: 100%;
-    font-size: 34px; 
-    line-height: 1.65;
+    max-width: 100%;
+    font-size: clamp(25px, 3.2vw, 36px);
+    line-height: 1.75;
     color: #e0e0e0;
     margin: 0;
     text-align: justify;
     font-weight: 400;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .rowad-desc span.highlight {
     color: #c1d82f;
     font-weight: 700;
-  }
-
-  /* Secondary Col & Grid Layout for Icons 1-4 */
-  .secondary-col {
-    display: flex;
-    flex-direction: column;
-    gap: 45px;
   }
 
   .other-elements-wrapper {
@@ -302,7 +489,7 @@
     object-fit: contain;
   }
 
-  /* ---------- VIDEO SECTION (rowadsbs.mp4) ---------- */
+  /* ---------- VIDEO SECTION ---------- */
   .video-stage-wrapper {
     display: flex;
     flex-direction: column;
@@ -341,7 +528,7 @@
   }
 
   .quote-arabic-huge {
-    font-size: clamp(36px, 4.5vw, 64px); 
+    font-size: clamp(40px, 6vw, 84px); 
     font-weight: 700;
     text-align: center;
     color: #fff;
@@ -350,6 +537,7 @@
     min-height: 2.8em;
     word-break: break-word;
     font-family: 'Thmanyah Sans', sans-serif;
+    max-width: 100%;
   }
 
   .typewriter-cursor {
@@ -402,7 +590,7 @@
   }
 
   .alphabet-row {
-    font-size: clamp(20px, 2.8vw, 36px);
+    font-size: clamp(18px, 2.8vw, 36px);
     font-weight: 700;
     color: #fff;
     letter-spacing: 1px;
@@ -418,10 +606,11 @@
   }
 
   .font-weights-list {
-    font-size: 26px;
+    font-size: clamp(18px, 2vw, 26px);
     color: #888;
     line-height: 1.6;
     margin: 0;
+    word-break: break-word;
   }
 
   .font-weights-list span {
@@ -439,10 +628,12 @@
     border-radius: 16px;
     padding: 60px 40px;
     min-height: 350px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .dynamic-abjad-preview {
-    font-size: 80px;
+    font-size: clamp(50px, 8vw, 80px);
     font-weight: 400;
     color: #fff;
     text-align: center;
@@ -452,11 +643,12 @@
   }
 
   .dynamic-weight-indicator {
-    font-size: 22px;
+    font-size: 18px;
     color: #c1d82f;
     margin-top: 30px;
     font-weight: 500;
     letter-spacing: 1px;
+    text-align: center;
   }
 
   /* ---------- FOOTER ---------- */
@@ -467,6 +659,7 @@
     position: relative;
     overflow: hidden;
     z-index: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .footer-bg-logo {
@@ -495,15 +688,68 @@
     z-index: 2;
   }
 
+  .footer-block { text-align: inherit; }
+
+  .footer-left .name {
+    font-weight: 800;
+    font-size: clamp(30px, 3.3vw, 39px);
+    margin: 0 0 6px;
+    color: #c1d82f;
+  }
+
+  .footer-left .title-text {
+    margin: 0;
+    font-size: clamp(21px, 2.1vw, 25.5px);
+    font-weight: 500;
+    color: #c1d82f;
+  }
+
+  .footer-left .links {
+    margin-top: 36px;
+    font-weight: 700;
+    font-size: clamp(22.5px, 2.25vw, 27px);
+    color: #c1d82f;
+  }
+
+  .footer-left .links a {
+    text-decoration: none;
+    text-underline-offset: 6px;
+    color: inherit;
+    transition: text-decoration-line 0.2s ease;
+  }
+
+  .footer-left .links a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+
+  .footer-right h4 {
+    margin: 0 0 24px;
+    font-size: clamp(42px, 6.3vw, 72px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #c1d82f;
+  }
+
+  .footer-right p {
+    margin: 0;
+    font-size: 21px;
+    opacity: 0.85;
+    color: #ffffff;
+  }
+
   @media (max-width: 1024px) {
     .rowad-top-grid {
       grid-template-columns: 1fr;
     }
-    .secondary-col {
-      order: 2;
-    }
     .rowad-main-info {
-      order: 1;
+      grid-column: auto;
+    }
+    .secondary-col {
+      grid-column: auto;
     }
     .font-showcase-grid {
       grid-template-columns: 1fr;
@@ -512,35 +758,93 @@
       min-height: auto;
       padding: 60px 0;
     }
-    .footer-inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 40px;
+  }
+
+  @media (max-width: 768px) {
+    footer { 
+      padding: 48px 20px; 
     }
-    .footer-block.footer-right {
-      text-align: right;
+    .footer-inner {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .footer-right {
+      text-align: right; 
+    }
+    .footer-right h4 { 
+      font-size: 36px; 
+      line-height: 1.25;
+    }
+    .footer-left .links {
+      font-size: 18px;
+      margin-top: 24px;
     }
   }
 </style>
 </head>
 <body>
 
-<div class="hero-wrapper reveal">
-  <!-- NAV BAR -->
+<!-- TOP FLOATING HEADER BAR (MOBILE ONLY) -->
+<div class="top-header-bar" id="topHeaderBar">
+  <div class="hero-wrapper" style="padding: 15px 5vw;">
+    <header>
+      <nav class="nav">
+        <div class="hamburger-container hamburger-trigger" aria-label="Menu">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="logo-container">
+          <a href="https://salemtarmissi.com/"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
+        </div>
+      </nav>
+    </header>
+  </div>
+</div>
+
+<!-- FULLSCREEN MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <div class="overlay-top-bar">
+    <div class="hamburger-container hamburger-trigger active" aria-label="Close Menu">
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="logo-container" style="padding: 0 15px;">
+      <a href="https://salemtarmissi.com/"><img src="images/salemgreen.svg" alt="Salem Green Logo" style="height: 55px; width: auto; object-fit: contain;"></a>
+    </div>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="https://salemtarmissi.com/#portfolio" class="mobile-link" data-i18n="nav_portfolio">أعمالي</a></li>
+    <li><a href="https://salemtarmissi.com/#about" class="mobile-link" data-i18n="nav_about">عني</a></li>
+    <li><a href="#" class="mobile-link lang-toggle" data-i18n="nav_lang">English</a></li>
+    <li><a href="https://salemtarmissi.com/#contact" class="mobile-link" data-i18n="nav_contact">تواصل</a></li>
+  </ul>
+</div>
+
+<!-- DESKTOP NAV BAR -->
+<div class="hero-wrapper desktop-nav-wrapper reveal">
   <header>
     <nav class="nav">
       <div class="nav-group">
-        <a href="index.html#portfolio">أعمالي</a>
-        <a href="index.html#about">عني</a>
+        <a href="https://salemtarmissi.com/#portfolio" data-i18n="nav_portfolio">أعمالي</a>
+        <a href="https://salemtarmissi.com/#about" data-i18n="nav_about">عني</a>
       </div>
 
       <div class="logo-container">
-        <a href="index.html"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
+        <a href="https://salemtarmissi.com/"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
       </div>
 
       <div class="nav-group">
-        <a href="#" class="lang-toggle">English</a>
-        <a href="index.html#contact">تواصل</a>
+        <a href="#" class="lang-toggle" data-i18n="nav_lang">English</a>
+        <a href="https://salemtarmissi.com/#contact" data-i18n="nav_contact">تواصل</a>
       </div>
     </nav>
   </header>
@@ -554,19 +858,17 @@
       
       <div class="rowad-top-grid">
         
-        <!-- RIGHT: Big Logo & Paragraph -->
         <div class="rowad-main-info">
           <img src="images/logobig.png" alt="Rowad Logo Big" class="big-rowad-logo">
           
-          <p class="rowad-desc">
+          <p class="rowad-desc" data-i18n="hero_desc">
             رواد هي شركة استوديو مشاريع مقرها الخليج مكرسة لتحويل الأفكار الجريئة إلى شركات قابلة للنمو والتوسع ومن خلال <span class="highlight">الجمع بين الاستثمار</span>، والتوجيه الاستراتيجي، وبناء المشاريع بشكل عملي، تتعاون رواد مع المؤسسين والمبتكرين لصناعة الجيل القادم من الشركات المؤثرة. وتعكس العلامة التجارية نهجا استشرافيا في ريادة الأعمال يوازن بين <span class="highlight">الطموح، والتنفيذ</span>، والنمو طويل الأمد.
           </p>
         </div>
 
-        <!-- LEFT: Secondary Assets Grid (icon1 to icon4) & Meta -->
         <div class="secondary-col">
           <div class="other-elements-wrapper">
-            <div class="other-elements-title">عناصر أخرى</div>
+            <div class="other-elements-title" data-i18n="other_elements">عناصر أخرى</div>
             <div class="elements-grid">
               <div class="element-box"><img src="images/icon1.png" alt="Icon 1"></div>
               <div class="element-box"><img src="images/icon2.png" alt="Icon 2"></div>
@@ -575,14 +877,13 @@
             </div>
           </div>
 
-          <!-- Meta block (قطاع: مالية) -->
           <div class="rowad-meta-side">
             <div class="meta-item-side">
-              <span class="meta-label-side">قطاع:</span>
-              <span class="meta-value-side">مالية</span>
+              <span class="meta-label-side" data-i18n="meta_sector_label">قطاع:</span>
+              <span class="meta-value-side" data-i18n="meta_sector_value">مالية</span>
             </div>
             <div class="meta-item-side">
-              <span class="meta-label-side">السنة:</span>
+              <span class="meta-label-side" data-i18n="meta_year_label">السنة:</span>
               <span class="meta-value-side">2026</span>
             </div>
           </div>
@@ -593,14 +894,14 @@
     </div>
   </section>
 
-  <!-- PAGE SECTION 2: COLOR PALETTE (colors.png) -->
+  <!-- PAGE SECTION 2: COLOR PALETTE -->
   <section class="page-section">
     <div class="color-palette-container reveal">
       <img src="images/colors.png" alt="Rowad Color Palette">
     </div>
   </section>
 
-  <!-- PAGE SECTION 3: VIDEO STAGE (rowadsbs.mp4) -->
+  <!-- PAGE SECTION 3: VIDEO STAGE -->
   <section class="page-section">
     <div class="video-stage-wrapper reveal">
       <div class="video-container">
@@ -615,25 +916,25 @@
   <!-- PAGE SECTION 4: BOTTOM BRANDING SHOWCASE -->
   <section class="page-section">
     <div class="bottom-branding-showcase reveal">
-      <h2 class="quote-arabic-huge" id="typewriterHeading">استوديو مشاريع يبتكر المستقبل<br>ويصنع أثرًا مستدامًا.<span class="typewriter-cursor">&nbsp;</span></h2>
+      <h2 class="quote-arabic-huge" id="typewriterHeading">من الفكرة إلى الأثر.<span class="typewriter-cursor">&nbsp;</span></h2>
       
       <div class="font-showcase-grid">
         <div class="font-info-col">
           <h3 class="font-name-title">Thmanyah Sans / ثمانية سانس</h3>
           
           <div class="font-alphabet-display">
-            <div class="alphabet-row">أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ</div>
+            <div class="alphabet-row" id="arabicAlphabetRow">أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ</div>
             <div class="alphabet-row english-row">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
           </div>
 
           <p class="font-weights-list">
-            Weights: <span>Light (300), Regular (400), Medium (500), Bold (700), Black (900)</span>
+            Weights: <span data-i18n="font_weights">Light (300), Regular (400), Medium (500), Bold (700), Black (900)</span>
           </p>
         </div>
 
         <div class="font-preview-col">
-          <div class="dynamic-abjad-preview" id="dynamicAbjadText">أبجد</div>
-          <div class="dynamic-weight-indicator" id="dynamicWeightLabel">Weight: Regular (400)</div>
+          <div class="dynamic-abjad-preview" id="dynamicAbjadText" data-ar="أبجد" data-en="Abc">أبجد</div>
+          <div class="dynamic-weight-indicator" id="dynamicWeightLabel" data-i18n="weight_indicator">Weight: Regular (400)</div>
         </div>
       </div>
     </div>
@@ -650,7 +951,7 @@
       <p class="name" data-i18n="footer_name">سالم الطرميسي</p>
       <p class="title-text" data-i18n="footer_title">مصمم هويات بصرية</p>
       <p class="links">
-        <a href="#">Instagram</a> • <a href="#">Behance</a> • <a href="#">Email</a>
+        <a href="https://www.instagram.com/salemtarmissi/" target="_blank" rel="noopener noreferrer">Instagram</a> • <a href="https://www.behance.net/salemtarmissi" target="_blank" rel="noopener noreferrer">Behance</a> • <a href="mailto:octupi.graphics@gmail.com">Email</a>
       </p>
     </div>
 
@@ -662,8 +963,54 @@
 </footer>
 
 <script>
-  /* Intersection Observer for Fade-In Slide-Up Reveal on Scroll */
   document.addEventListener("DOMContentLoaded", function() {
+    /* Mobile Menu Toggle Logic */
+    const hamburgerTriggers = document.querySelectorAll('.hamburger-trigger');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu() {
+      mobileMenuOverlay.classList.toggle('open');
+      document.body.classList.toggle('menu-open');
+      
+      const isOpen = mobileMenuOverlay.classList.contains('open');
+      hamburgerTriggers.forEach(btn => {
+        if (isOpen) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    hamburgerTriggers.forEach(btn => {
+      btn.addEventListener('click', toggleMenu);
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if(mobileMenuOverlay.classList.contains('open')) {
+          toggleMenu();
+        }
+      });
+    });
+
+    /* Hide Header on Scroll & Show at Top (Mobile Only) */
+    const topHeaderBar = document.getElementById('topHeaderBar');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 50 && currentScrollY > lastScrollY && !mobileMenuOverlay.classList.contains('open')) {
+        topHeaderBar.classList.add('hidden');
+      } else {
+        topHeaderBar.classList.remove('hidden');
+      }
+      lastScrollY = currentScrollY;
+    });
+
+    /* Intersection Observer for Fade-In Slide-Up Reveal on Scroll */
     const reveals = document.querySelectorAll(".reveal");
 
     const revealOnScroll = function(entries, observer) {
@@ -685,16 +1032,63 @@
       observer.observe(revealEl);
     });
 
-    /* Typewriter Loop Animation for Heading */
-    const headingEl = document.getElementById('typewriterHeading');
-    const texts = [
-      "استوديو مشاريع يبتكر المستقبل<br>ويصنع أثرًا مستدامًا.",
+    /* Bilingual Dictionary and Translation Logic */
+    const translations = {
+      ar: {
+        nav_portfolio: "أعمالي",
+        nav_about: "عني",
+        nav_lang: "English",
+        nav_contact: "تواصل",
+        hero_desc: 'رواد هي شركة استوديو مشاريع مقرها الخليج مكرسة لتحويل الأفكار الجريئة إلى شركات قابلة للنمو والتوسع ومن خلال <span class="highlight">الجمع بين الاستثمار</span>، والتوجيه الاستراتيجي، وبناء المشاريع بشكل عملي، تتعاون رواد مع المؤسسين والمبتكرين لصناعة الجيل القادم من الشركات المؤثرة. وتعكس العلامة التجارية نهجا استشرافيا في ريادة الأعمال يوازن بين <span class="highlight">الطموح، والتنفيذ</span>، والنمو طويل الأمد.',
+        other_elements: "عناصر أخرى",
+        meta_sector_label: "قطاع:",
+        meta_sector_value: "مالية",
+        meta_year_label: "السنة:",
+        font_weights: "Light (300), Regular (400), Medium (500), Bold (700), Black (900)",
+        weight_indicator: "Weight: Regular (400)",
+        footer_name: "سالم الطرميسي",
+        footer_title: "مصمم هويات بصرية",
+        footer_cta: "هويتك الجديدة<br>بإنتظارك"
+      },
+      en: {
+        nav_portfolio: "Portfolio",
+        nav_about: "About",
+        nav_lang: "عربي",
+        nav_contact: "Contact",
+        hero_desc: 'Rowad is a Gulf-based venture studio dedicated to transforming bold ideas into scalable, growing enterprises. By <span class="highlight">combining investment</span>, strategic guidance, and hands-on venture building, Rowad collaborates with founders and innovators to craft the next generation of impactful companies. The brand reflects a forward-thinking approach to entrepreneurship that balances <span class="highlight">ambition, execution</span>, and long-term growth.',
+        other_elements: "Other Elements",
+        meta_sector_label: "Sector:",
+        meta_sector_value: "Finance",
+        meta_year_label: "Year:",
+        font_weights: "Light (300), Regular (400), Medium (500), Bold (700), Black (900)",
+        weight_indicator: "Weight: Regular (400)",
+        footer_name: "Salem Tarmissi",
+        footer_title: "Brand Identity Designer",
+        footer_cta: "Your New Identity<br>Awaits"
+      }
+    };
+
+    let currentLang = 'ar';
+    const langToggles = document.querySelectorAll('.lang-toggle');
+
+    /* Typewriter Loop Animation Arrays per Language */
+    const typewriterTextsAr = [
+      "من الفكرة إلى الأثر.",
       "ثمانية سانس / Thmanyah Sans",
       "أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ"
     ];
     
+    const typewriterTextsEn = [
+      "From Idea to Impact.",
+      "Thmanyah Sans",
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    ];
+
+    let texts = typewriterTextsAr;
     let currentTextIndex = 0;
-    
+    const headingEl = document.getElementById('typewriterHeading');
+    let typewriterTimeout = null;
+
     function runTypewriterLoop() {
       const fullHtml = texts[currentTextIndex];
       const cleanText = fullHtml.replace(/<br>/g, '\n');
@@ -705,10 +1099,10 @@
           charIndex--;
           let currentClean = cleanText.substring(0, charIndex);
           headingEl.innerHTML = currentClean.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
-          setTimeout(backspace, 35);
+          typewriterTimeout = setTimeout(backspace, 35);
         } else {
           currentTextIndex = (currentTextIndex + 1) % texts.length;
-          setTimeout(typeForward, 400);
+          typewriterTimeout = setTimeout(typeForward, 400);
         }
       }
 
@@ -720,16 +1114,51 @@
           let currentStr = targetClean.substring(0, typeIndex);
           headingEl.innerHTML = currentStr.replace(/\n/g, '<br>') + '<span class="typewriter-cursor">&nbsp;</span>';
           typeIndex++;
-          setTimeout(typeForward, 50);
+          typewriterTimeout = setTimeout(typeForward, 50);
         } else {
-          setTimeout(backspace, 3000);
+          typewriterTimeout = setTimeout(backspace, 3000);
         }
       }
 
-      setTimeout(backspace, 3000);
+      typewriterTimeout = setTimeout(backspace, 3000);
     }
 
     setTimeout(runTypewriterLoop, 1500);
+
+    langToggles.forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        
+        if (currentLang === 'en') {
+          document.body.classList.add('lang-en');
+          document.documentElement.setAttribute('lang', 'en');
+          document.documentElement.setAttribute('dir', 'ltr');
+          texts = typewriterTextsEn;
+          document.getElementById('arabicAlphabetRow').textContent = "Abcdefghijklmnopqrstuvwxyz";
+          document.getElementById('dynamicAbjadText').textContent = document.getElementById('dynamicAbjadText').getAttribute('data-en');
+        } else {
+          document.body.classList.remove('lang-en');
+          document.documentElement.setAttribute('lang', 'ar');
+          document.documentElement.setAttribute('dir', 'rtl');
+          texts = typewriterTextsAr;
+          document.getElementById('arabicAlphabetRow').textContent = "أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ";
+          document.getElementById('dynamicAbjadText').textContent = document.getElementById('dynamicAbjadText').getAttribute('data-ar');
+        }
+
+        currentTextIndex = 0;
+        clearTimeout(typewriterTimeout);
+        runTypewriterLoop();
+
+        // Update all text elements with data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[currentLang][key]) {
+            el.innerHTML = translations[currentLang][key];
+          }
+        });
+      });
+    });
 
     /* Automatic Font Weight Cycling Animation */
     const abjadPreview = document.getElementById('dynamicAbjadText');
@@ -744,10 +1173,10 @@
     let weightIndex = 0;
 
     setInterval(() => {
-      weightIndex = (weightIndex + 1) % weights.length;
       const currentW = weights[weightIndex];
       abjadPreview.style.fontWeight = currentW.weight;
       weightLabel.textContent = `Weight: ${currentW.name}`;
+      weightIndex = (weightIndex + 1) % weights.length;
     }, 1800);
   });
 </script>
