@@ -1035,7 +1035,7 @@
       const gifBuffer = await loadGifAsArrayBuffer('images/spinning-logo(2).gif');
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const baseSize = Math.min(window.innerHeight * 1.5, 2000);
+      const baseSize = Math.max(window.innerWidth, window.innerHeight) * 1.2;
       canvas.width = baseSize * dpr;
       canvas.height = baseSize * dpr;
 
