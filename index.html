@@ -46,38 +46,6 @@
     font-weight: 300;
     font-style: italic;
   }
-
-  @font-face {
-    font-family: 'Thmanyah Sans';
-    src: url('fonts/thmanyahsans-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Thmanyah Sans';
-    src: url('fonts/thmanyahsans-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Thmanyah Sans';
-    src: url('fonts/thmanyahsans-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Thmanyah Sans';
-    src: url('fonts/thmanyahsans-Black.woff2') format('woff2');
-    font-weight: 900;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Thmanyah Sans';
-    src: url('fonts/thmanyahsans-Light.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
-  }
-
   @font-face {
     font-family: 'Alfont Arabic';
     src: url('fonts/alfont_com_الف-تيكا-عربي.woff2') format('woff2');
@@ -112,7 +80,7 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'Thmanyah Sans', 'Alfont Arabic', sans-serif;
+    font-family: 'Helvetica', 'Alfont Arabic', sans-serif;
     direction: rtl;
     text-align: right;
     overflow-x: hidden;
@@ -454,62 +422,6 @@
 
   html[dir="ltr"] .hero-line1 { text-align: left; }
   html[dir="ltr"] .hero-line2 { text-align: right; }
-
-  /* ---------- ENDLESS MARQUEE TICKER (SPACED & FIXED LOGO OVERLAP) ---------- */
-  .marquee-ticker {
-    width: 100%;
-    background-color: #000000;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    padding: 42px 0;
-    display: flex;
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 90px;
-    align-items: center;
-    width: max-content;
-    will-change: transform;
-    animation: marqueeScroll 25s linear infinite;
-  }
-
-  /* Directional Animation based on RTL/LTR */
-  html[dir="rtl"] .marquee-track {
-    animation-name: marqueeScrollRTL;
-  }
-
-  html[dir="ltr"] .marquee-track {
-    animation-name: marqueeScrollLTR;
-  }
-
-  @keyframes marqueeScrollRTL {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(50%); }
-  }
-
-  @keyframes marqueeScrollLTR {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .marquee-item {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    font-size: clamp(24px, 2.5vw, 34px);
-    font-weight: 400;
-    color: var(--ink);
-  }
-
-  .marquee-item img.marquee-logo {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
 
   /* ---------- ABOUT SECTION ---------- */
   .about {
@@ -979,46 +891,6 @@
   </div>
 </div>
 
-<!-- ENDLESS MARQUEE TICKER -->
-<div class="marquee-ticker">
-  <div class="marquee-track">
-    <!-- Set 1 -->
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_ar">هوية تصنع الفرق</span>
-    </div>
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_en">Design with intention</span>
-    </div>
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_ar">هوية تصنع الفرق</span>
-    </div>
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_en">Design with intention</span>
-    </div>
-    <!-- Set 2 -->
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_ar">هوية تصنع الفرق</span>
-    </div>
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_en">Design with intention</span>
-    </div>
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_ar">هوية تصنع الفرق</span>
-    </div>
-    <div class="marquee-item">
-      <img src="images/3dgifmaker.png" alt="Logo" class="marquee-logo">
-      <span data-i18n="marquee_en">Design with intention</span>
-    </div>
-  </div>
-</div>
-
 <!-- ABOUT SECTION -->
 <section class="about" id="about">
   <div class="about-container">
@@ -1373,8 +1245,6 @@
       nav_lang: "English",
       hero_line1: "أصمم هويات<br>بصرية",
       hero_line2: "وأحول<br>فكرتك إلى هوية",
-      marquee_ar: "هوية تصنع الفرق",
-      marquee_en: "Design with intention",
       bio_1: "أهلاً، أنا سالم، مصمم هويات بصرية أؤمن أن التصميم مو مجرد شكل جميل، بل فكرة تتحول إلى شيء يُرى ويُتذكر.",
       bio_2: "أركز على بناء الهويات البصرية وتطوير المفاهيم من الفكرة الأولى إلى نظام بصري متكامل، من الشعارات والعناصر البصرية إلى التطبيقات والمحتوى.",
       bio_3: "أحب أن أجد الفكرة التي تجعل العلامة مختلفة، ثم أبني حولها تصميمًا واضحًا، متناسقًا، وله سبب.",
@@ -1392,8 +1262,6 @@
       nav_lang: "عربي",
       hero_line1: "I Design Visual<br>Identities",
       hero_line2: "And Turn Your<br>Idea Into Reality",
-      marquee_ar: "هوية تصنع الفرق",
-      marquee_en: "Design with intention",
       bio_1: "Hello, I'm Salem, a visual identity designer who believes that design isn't just about good looks—it's an idea transformed into something memorable.",
       bio_2: "I focus on building brand identities and concepts from the initial idea into a cohesive visual system, from logos to collateral and content.",
       bio_3: "I love finding the unique angle that sets a brand apart, then creating a clear, purposeful, and harmonized design around it.",
