@@ -79,6 +79,37 @@
     direction: rtl;
     text-align: right;
     overflow-x: hidden;
+    cursor: none !important;
+  }
+
+  body a, body button, body .work-card, body input[type="range"] {
+    cursor: none !important;
+  }
+
+  /* ---------- SMOOTH PHYSICS CUSTOM CURSOR ---------- */
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 44px;
+    background-color: var(--paper);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    will-change: transform, left, top;
+  }
+
+  .cursor-dot.hovered {
+    transform: translate(-50%, -50%) scale(2.2);
+  }
+
+  @media (pointer: coarse) {
+    .cursor-dot { display: none; }
+    body, body a, body button, body .work-card, body input[type="range"] { cursor: auto !important; }
   }
 
   body.ltr-mode {
@@ -480,13 +511,13 @@
     background: transparent;
     appearance: none;
     -webkit-appearance: none;
-    cursor: pointer;
+    cursor: none !important;
     z-index: 5;
     margin: 0;
   }
 
   .custom-range-track input[type="range"]:disabled {
-    cursor: default;
+    cursor: none !important;
   }
 
   input[type="range"]::-webkit-slider-thumb {
@@ -497,6 +528,7 @@
     background: #c1d82f;
     transform: rotate(45deg);
     border: none;
+    cursor: none !important;
   }
 
   input[type="range"]::-moz-range-thumb {
@@ -505,6 +537,7 @@
     background: #c1d82f;
     transform: rotate(45deg);
     border: none;
+    cursor: none !important;
   }
 
   .color-palette-container {
@@ -845,6 +878,9 @@
 </head>
 <body>
 
+<!-- SMOOTH PHYSICS CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+
 <div id="page-loader" class="loader-overlay">
   <img src="images/3dgifmaker89467.gif" alt="Loading..." class="loader-gif">
 </div>
@@ -1036,6 +1072,40 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+    /* Smooth Physics Custom Cursor & Hover Scale */
+    const cursor = document.getElementById('cursorDot');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+    const speed = 0.15;
+
+    window.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function updateCursor() {
+      cursorX += (mouseX - cursorX) * speed;
+      cursorY += (mouseY - cursorY) * speed;
+      if (cursor) {
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+      }
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    const clickables = document.querySelectorAll('a, button, .work-card, input[type="range"]');
+    clickables.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (cursor) cursor.classList.add('hovered');
+      });
+      el.addEventListener('mouseleave', () => {
+        if (cursor) cursor.classList.remove('hovered');
+      });
+    });
+
     /* Mobile Menu Toggle Logic */
     const hamburgerTriggers = document.querySelectorAll('.hamburger-trigger');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');

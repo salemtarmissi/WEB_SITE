@@ -74,6 +74,37 @@
     direction: rtl;
     text-align: right;
     overflow-x: hidden;
+    cursor: none !important;
+  }
+
+  body a, body button, body .work-card {
+    cursor: none !important;
+  }
+
+  /* ---------- SMOOTH PHYSICS CUSTOM CURSOR ---------- */
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 44px;
+    background-color: var(--paper);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    will-change: transform, left, top;
+  }
+
+  .cursor-dot.hovered {
+    transform: translate(-50%, -50%) scale(2.2);
+  }
+
+  @media (pointer: coarse) {
+    .cursor-dot { display: none; }
+    body, body a, body button, body .work-card { cursor: auto !important; }
   }
 
   body.menu-open {
@@ -785,6 +816,9 @@
 </head>
 <body>
 
+<!-- SMOOTH PHYSICS CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+
 <!-- TOP FLOATING HEADER BAR (MOBILE ONLY) -->
 <div class="top-header-bar" id="topHeaderBar">
   <div class="hero-wrapper" style="padding: 15px 5vw;">
@@ -964,6 +998,40 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+    /* Smooth Physics Custom Cursor & Hover Scale */
+    const cursor = document.getElementById('cursorDot');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+    const speed = 0.15;
+
+    window.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function updateCursor() {
+      cursorX += (mouseX - cursorX) * speed;
+      cursorY += (mouseY - cursorY) * speed;
+      if (cursor) {
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+      }
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    const clickables = document.querySelectorAll('a, button, .work-card');
+    clickables.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (cursor) cursor.classList.add('hovered');
+      });
+      el.addEventListener('mouseleave', () => {
+        if (cursor) cursor.classList.remove('hovered');
+      });
+    });
+
     /* Mobile Menu Toggle Logic */
     const hamburgerTriggers = document.querySelectorAll('.hamburger-trigger');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
