@@ -14,23 +14,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Salem Tarmissi</title>
 <link rel="icon" type="image/svg+xml" href="images/Asset 5.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #c1d82f;
-    --ink: #000000;
-    --paper: #ffffff;
+    --bg: #000000;
+    --ink: #ffffff;
+    --accent: #c1d82f;
   }
 
   /* Custom Scrollbar */
   ::-webkit-scrollbar { width: 12px; }
-  ::-webkit-scrollbar-track { background: #c1d831; }
-  ::-webkit-scrollbar-thumb { background: #000000; }
+  ::-webkit-scrollbar-track { background: #000000; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); }
   
   html {
-    scrollbar-color: #000000 #c1d831;
+    scrollbar-color: var(--accent) #000000;
     scrollbar-width: auto;
   }
 
@@ -45,10 +42,19 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-family: 'Helvetica Neue LT Arabic', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     direction: rtl;
     text-align: right;
     overflow-x: hidden;
+    cursor: none !important;
+  }
+
+  body a, body button, body .work-card {
+    cursor: none !important;
+  }
+
+  html[lang="en"] body {
+    font-family: Helvetica, Arial, sans-serif;
   }
 
   html[dir="ltr"] body {
@@ -56,21 +62,188 @@
     text-align: left;
   }
 
-  a { color: inherit; text-decoration: none; }
+  a, button, .work-card { 
+    color: inherit; 
+    text-decoration: none; 
+    transition: color 0.2s ease, font-weight 0.2s ease; 
+  }
+  a:hover { color: var(--accent); font-weight: 700; }
   img, video { max-width: 100%; height: auto; display: block; }
+
+  /* ---------- FADE-IN & SLIDE-UP ANIMATIONS ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* ---------- SMOOTH PHYSICS CUSTOM CURSOR ---------- */
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 44px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    will-change: transform, left, top;
+  }
+
+  .cursor-dot.hovered {
+    transform: translate(-50%, -50%) scale(2.2);
+  }
+
+  @media (pointer: coarse) {
+    .cursor-dot { display: none; }
+    body, body a, body button, body .work-card { cursor: auto !important; }
+  }
+
+  /* ---------- TOP FLOATING HEADER BAR (MOBILE ONLY) ---------- */
+  .top-header-bar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #000000;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .top-header-bar.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .top-header-bar {
+      display: block;
+    }
+  }
+
+  .hamburger-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1150;
+    padding: 15px;
+  }
+
+  .hamburger-icon {
+    width: 40px;  
+    height: 30px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+  }
+
+  .hamburger-icon span {
+    display: block;
+    height: 4px;  
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger-container.active .hamburger-icon span:nth-child(1) {
+    transform: translateY(13px) rotate(45deg);
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-container.active .hamburger-icon span:nth-child(3) {
+    transform: translateY(-13px) rotate(-45deg);
+  }
+
+  /* ---------- FULLSCREEN MOBILE MENU OVERLAY ---------- */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .mobile-menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .overlay-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-links a {
+    font-size: 38px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+  }
+
+  .mobile-nav-links a:hover {
+    color: var(--accent);
+    font-weight: 800;
+  }
 
   /* ---------- TRANSITION LOADER OVERLAY ---------- */
   .page-loader {
     position: fixed;
     inset: 0;
-    background: var(--bg);
+    background: #000000;
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.6s ease;
   }
 
   .page-loader.active {
@@ -79,11 +252,11 @@
   }
 
   .page-loader img {
-    width: 500px;
+    width: 280px;
     height: auto;
   }
 
-  /* ---------- HERO WRAPPER ---------- */
+  /* ---------- HERO SECTION WRAPPER ---------- */
   .hero-wrapper {
     min-height: 100vh;
     min-height: 100dvh;
@@ -95,21 +268,44 @@
     overflow: hidden;
   }
 
-  .hero-bg-gif {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(130vw, 1600px);
-    height: auto;
-    opacity: 0.28;
-    pointer-events: none;
-    z-index: 0;
+  @media (max-width: 1024px) {
+    header.desktop-header {
+      display: none; 
+    }
   }
 
-  header, .hero-top, .hero-bottom {
+  /* ---------- LIVE ASCII LOGO BACKGROUND CANVAS (FADE IN) ---------- */
+  #ascii-bg-canvas {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 175vh;            
+    width: auto;              
+    aspect-ratio: 1 / 1;      
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 1.8s ease 0.3s;
+  }
+
+  #ascii-bg-canvas.loaded {
+    opacity: 0.85;
+  }
+
+  /* ---------- ABSOLUTE DESKTOP HEADER (NO GAP & FULLY CLICKABLE) ---------- */
+  header.desktop-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: clamp(20px, 3.5vw, 36px) clamp(24px, 8vw, 84px);
+    z-index: 30;
+  }
+
+  .hero-top, .hero-bottom {
     position: relative;
-    z-index: 10;
+    z-index: 20;
   }
 
   /* ---------- NAV DESKTOP ---------- */
@@ -123,6 +319,10 @@
     letter-spacing: 0.2px;
   }
 
+  .top-header-bar .nav {
+    justify-content: space-between;
+  }
+
   .nav-group {
     display: flex;
     align-items: center;
@@ -131,85 +331,32 @@
 
   .nav a {
     opacity: 0.85;
-    transition: opacity .2s ease;
+    font-weight: 400;
+    transition: opacity .2s ease, color .2s ease, font-weight .2s ease;
   }
 
-  .nav a:hover { opacity: 1; }
+  .nav a:hover { 
+    opacity: 1; 
+    color: var(--accent); 
+    font-weight: 700;
+  }
 
   .nav .logo-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 12px;
+    padding: 0 15px;
   }
 
   .nav .logo-container img {
-    height: 42px;
+    height: 55px; 
     width: auto;
     object-fit: contain;
   }
 
-  /* HAMBURGER BUTTON (Mobile Only) */
-  .mobile-nav-header {
-    display: none;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    z-index: 101;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 30px;
-    height: 3px;
-    background-color: var(--ink);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  /* MOBILE MENU OVERLAY */
-  .mobile-menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: var(--bg);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .mobile-menu-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .mobile-menu-overlay a {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--ink);
-  }
-
   /* ---------- HERO HEADLINES ---------- */
   .hero-top {
-    margin-top: clamp(0px, 0vh, 0px);
+    margin-top: 48px;
   }
 
   .hero-bottom {
@@ -223,6 +370,7 @@
     line-height: 1.08;
     font-size: clamp(52px, 10vw, 126px);
     text-align: right;
+    color: var(--accent);
   }
 
   .hero-line2 {
@@ -231,6 +379,7 @@
     line-height: 1.08;
     font-size: clamp(52px, 10vw, 126px);
     text-align: left;
+    color: var(--accent);
   }
 
   html[dir="ltr"] .hero-line1 { text-align: left; }
@@ -263,7 +412,7 @@
     line-height: 1.65;
     font-weight: 500;
     margin: 0;
-    color: #000;
+    color: var(--ink);
     text-align: justify;
     text-justify: inter-word;
   }
@@ -280,7 +429,7 @@
     font-size: clamp(28px, 3vw, 45px);
     font-weight: 800;
     margin: 0 0 24px 0;
-    color: #000;
+    color: var(--ink);
   }
 
   .app-row {
@@ -335,6 +484,7 @@
     max-width: 480px;
     height: auto;
     display: block;
+    filter: invert(1);
   }
 
   /* ---------- PORTFOLIO ---------- */
@@ -349,6 +499,7 @@
     letter-spacing: -2px;
     margin: 0 0 36px;
     white-space: nowrap;
+    color: var(--ink);
   }
 
   .work-grid {
@@ -369,6 +520,7 @@
     position: relative;
     aspect-ratio: 1 / 1;
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .work-card.a { grid-area: a; }
@@ -388,7 +540,7 @@
     height: 100%;
     object-fit: cover;
     z-index: 1;
-    filter: grayscale(100%);
+    filter: grayscale(100%) brightness(0.4);
     transition: opacity 0.45s ease;
   }
 
@@ -412,8 +564,8 @@
     position: absolute;
     inset: 0;
     margin: auto;
-    max-width: 330px;
-    max-height: 330px;
+    max-width: 390px;
+    max-height: 390px;
     object-fit: contain;
     z-index: 3;
     pointer-events: none;
@@ -430,19 +582,21 @@
   }
 
   .work-card.d img {
-    max-width: 360px;
+    max-width: 420px;
     height: auto;
     object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(88%) sepia(48%) saturate(1184%) hue-rotate(28deg) brightness(97%) contrast(90%);
   }
 
   /* ---------- FOOTER ---------- */
   footer {
-    background: var(--ink);
-    color: var(--paper);
+    background: #0a0a0a;
+    color: var(--ink);
     padding: clamp(60px, 9vw, 120px) clamp(30px, 8vw, 84px);
     position: relative;
     overflow: hidden;
     z-index: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .footer-bg-logo {
@@ -456,6 +610,8 @@
     object-fit: contain;
     pointer-events: none;
     z-index: 1;
+    opacity: 0.05;
+    filter: brightness(0) saturate(100%) invert(88%) sepia(48%) saturate(1184%) hue-rotate(28deg) brightness(97%) contrast(90%);
   }
 
   .footer-inner {
@@ -476,26 +632,36 @@
     font-weight: 800;
     font-size: clamp(30px, 3.3vw, 39px);
     margin: 0 0 6px;
-    color: var(--bg);
+    color: var(--accent);
   }
 
   .footer-left .title-text {
     margin: 0;
     font-size: clamp(21px, 2.1vw, 25.5px);
     font-weight: 500;
-    color: var(--bg);
+    color: var(--accent);
   }
 
   .footer-left .links {
     margin-top: 36px;
     font-weight: 700;
     font-size: clamp(22.5px, 2.25vw, 27px);
-    color: var(--bg);
+    color: var(--ink);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .footer-left .links a {
     text-decoration: underline;
     text-underline-offset: 6px;
+    font-weight: 700;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+  }
+
+  .footer-left .links a:hover {
+    color: var(--accent);
+    font-weight: 900;
   }
 
   .footer-right h4 {
@@ -503,31 +669,22 @@
     font-size: clamp(42px, 6.3vw, 72px);
     font-weight: 800;
     line-height: 1.15;
-    color: var(--bg);
+    color: var(--accent);
   }
 
   .footer-right p {
     margin: 0;
     font-size: 21px;
     opacity: 0.85;
-    color: var(--paper);
+    color: var(--ink);
   }
 
   /* ========================================================= */
   /* ---------- MOBILE SPECIFIC STYLES (≤ 768px) ------------ */
   /* ========================================================= */
   @media (max-width: 768px) {
-    .nav { display: none; }
-    .mobile-nav-header { display: flex; }
-
-    html[dir="ltr"] .mobile-nav-header {
-      flex-direction: row-reverse;
-    }
-
-    .mobile-nav-header .logo-container img { height: 38px; }
-
     .hero-wrapper {
-      padding: 16px 16px 28px 16px;
+      padding: 24px 20px 32px 20px;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
@@ -535,27 +692,24 @@
       justify-content: space-between;
     }
 
-    .hero-bg-gif {
-      width: 320vw !important;
+    #ascii-bg-canvas {
+      height: 250vh !important; 
+      width: auto !important;
       max-width: none !important;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0.35;
     }
 
-    .hero-top { margin-top: 4px; margin-bottom: 0; }
+    .hero-top { margin-top: 16px; margin-bottom: 0; z-index: 20; }
     .hero-line1 {
-      font-size: clamp(48px, 13.5vw, 84px);
-      line-height: 1.02;
+      font-size: clamp(48px, 13.5vw, 76px);
+      line-height: 1.05;
       text-align: right;
       letter-spacing: -1px;
     }
 
-    .hero-bottom { margin-top: auto; margin-bottom: 16px; }
+    .hero-bottom { margin-top: auto; margin-bottom: 12px; z-index: 20; }
     .hero-line2 {
-      font-size: clamp(48px, 13.5vw, 84px);
-      line-height: 1.02;
+      font-size: clamp(48px, 13.5vw, 76px);
+      line-height: 1.05;
       text-align: left;
       letter-spacing: -1px;
     }
@@ -578,32 +732,100 @@
     }
 
     .work-card.d { display: none; }
-    .work-card .overlay-img { max-width: 130px; max-height: 130px; }
+    .work-card .overlay-img { max-width: 240px; max-height: 240px; }
 
-    footer { padding: 48px 20px; }
+    /* Polished Mobile Footer Styles */
+    footer { 
+      padding: 50px 24px; 
+      text-align: center;
+    }
     .footer-inner {
       flex-direction: column-reverse;
-      align-items: flex-start;
-      gap: 32px;
+      align-items: center;
+      gap: 36px;
+      text-align: center;
     }
-    .footer-right h4 { font-size: 38px; }
+    .footer-block {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .footer-left .links {
+      justify-content: center;
+      gap: 20px;
+    }
+    .footer-right h4 { 
+      font-size: 34px; 
+      line-height: 1.25;
+    }
+    .footer-bg-logo {
+      width: 90%;
+      opacity: 0.04;
+    }
   }
 </style>
 </head>
 <body>
 
+<!-- SMOOTH PHYSICS CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- TOP FLOATING HEADER BAR (MOBILE ONLY - STARTS HIDDEN) -->
+<div class="top-header-bar" id="topHeaderBar">
+  <div class="hero-wrapper" style="padding: 15px 5vw; min-height: auto;">
+    <header style="position: static; padding: 0;">
+      <nav class="nav">
+        <div class="hamburger-container hamburger-trigger" aria-label="Menu">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="logo-container">
+          <a href="#"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
+        </div>
+      </nav>
+    </header>
+  </div>
+</div>
+
+<!-- FULLSCREEN MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <div class="overlay-top-bar">
+    <div class="hamburger-container hamburger-trigger active" aria-label="Close Menu">
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="logo-container" style="padding: 0 15px;">
+      <a href="#"><img src="images/salemgreen.svg" alt="Salem Green Logo" style="height: 55px; width: auto; object-fit: contain;"></a>
+    </div>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="#portfolio" class="mobile-link" data-i18n="nav_work">أعمالي</a></li>
+    <li><a href="#about" class="mobile-link" data-i18n="nav_about">عني</a></li>
+    <li><a href="#" class="mobile-link lang-toggle" data-i18n="nav_lang">English</a></li>
+    <li><a href="#contact" class="mobile-link" data-i18n="nav_contact">تواصل</a></li>
+  </ul>
+</div>
+
 <!-- TRANSITION LOADER OVERLAY -->
-<div class="page-loader" id="pageLoader">
-  <img src="images/3dgifmaker89467.gif" alt="Loading...">
+<div class="page-loader active" id="pageLoader">
+  <img src="images/3dgifmaker.gif" alt="Loading...">
 </div>
 
 <div class="hero-wrapper">
-  <!-- BACKGROUND GIF -->
-  <img src="images/3dgifmaker89467.gif" alt="" class="hero-bg-gif">
+  <!-- LIVE ASCII LOGO BACKGROUND CANVAS -->
+  <canvas id="ascii-bg-canvas"></canvas>
 
-  <!-- NAV BLOCK -->
-  <header>
-    <!-- Desktop Navigation -->
+  <!-- NAV BLOCK (DESKTOP ONLY) -->
+  <header class="desktop-header reveal reveal-delay-1">
     <nav class="nav">
       <div class="nav-group">
         <a href="#portfolio" data-i18n="nav_work">أعمالي</a>
@@ -611,43 +833,23 @@
       </div>
 
       <div class="logo-container">
-        <a href="#"><img src="images/logo.svg" alt="Logo"></a>
+        <a href="#"><img src="images/salemgreen.svg" alt="Salem Green Logo"></a>
       </div>
 
       <div class="nav-group">
-        <a href="#" class="lang-toggle">English</a>
+        <a href="#" class="lang-toggle" data-i18n="nav_lang">English</a>
         <a href="#contact" data-i18n="nav_contact">تواصل</a>
       </div>
     </nav>
-
-    <!-- Mobile Header Bar -->
-    <div class="mobile-nav-header">
-      <div class="logo-container">
-        <a href="#"><img src="images/logo.svg" alt="Logo"></a>
-      </div>
-      <button class="hamburger" id="hamburgerBtn" aria-label="Open Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
   </header>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" id="mobileMenu">
-    <a href="#portfolio" class="mobile-link" data-i18n="nav_work">أعمالي</a>
-    <a href="#about" class="mobile-link" data-i18n="nav_about">عني</a>
-    <a href="#contact" class="mobile-link" data-i18n="nav_contact">تواصل</a>
-    <a href="#" class="lang-toggle">English</a>
-  </div>
-
   <!-- TOP HEADLINE -->
-  <div class="hero-top">
+  <div class="hero-top reveal reveal-delay-2">
     <h1 class="hero-line1" data-i18n="hero_line1">أصمم هويات<br>بصرية</h1>
   </div>
 
   <!-- BOTTOM HEADLINE -->
-  <div class="hero-bottom">
+  <div class="hero-bottom reveal reveal-delay-3">
     <h1 class="hero-line2" data-i18n="hero_line2">وأحول<br>فكرتك إلى هوية</h1>
   </div>
 </div>
@@ -655,13 +857,13 @@
 <!-- ABOUT SECTION -->
 <section class="about" id="about">
   <div class="about-container">
-    <div class="bio">
+    <div class="bio reveal">
       <p data-i18n="bio_1">أهلاً، أنا سالم، مصمم هويات بصرية أؤمن أن التصميم مو مجرد شكل جميل، بل فكرة تتحول إلى شيء يُرى ويُتذكر.</p>
       <p data-i18n="bio_2">أركز على بناء الهويات البصرية وتطوير المفاهيم من الفكرة الأولى إلى نظام بصري متكامل، من الشعارات والعناصر البصرية إلى التطبيقات والمحتوى.</p>
       <p data-i18n="bio_3">أحب أن أجد الفكرة التي تجعل العلامة مختلفة، ثم أبني حولها تصميمًا واضحًا، متناسقًا، وله سبب.</p>
     </div>
 
-    <div class="software">
+    <div class="software reveal reveal-delay-2">
       <h3 data-i18n="software_title">خبرتي في البرامج</h3>
       <div class="app-row">
         <button class="app-icon" data-app aria-label="After Effects">
@@ -686,11 +888,11 @@
 
 <!-- PORTFOLIO SECTION -->
 <section class="portfolio" id="portfolio">
-  <h2 data-i18n="portfolio_title">أعمـالـــــــــــــــي</h2>
+  <h2 class="reveal" data-i18n="portfolio_title">أعمـالـــــــــــــــي</h2>
   <div class="work-grid">
     
     <!-- CARD A: Rowad -->
-    <div class="work-card a" data-href="rowad.html">
+    <div class="work-card a reveal reveal-delay-1" data-href="rowad.html">
       <img src="images/bsnisstock.png" alt="Business Stock" class="stock-img">
       <video class="card-video" autoplay loop muted playsinline preload="auto">
         <source src="videos/patternrowad.mp4" type="video/mp4">
@@ -699,7 +901,7 @@
     </div>
     
     <!-- CARD B: Atyaf -->
-    <div class="work-card b" data-href="atyaf.html">
+    <div class="work-card b reveal reveal-delay-2" data-href="atyaf.html">
       <img src="images/realestock.png" alt="Real Estate Stock" class="stock-img">
       <video class="card-video" autoplay loop muted playsinline preload="auto">
         <source src="videos/patternatyaf.mp4" type="video/mp4">
@@ -708,7 +910,7 @@
     </div>
     
     <!-- CARD C: Ufuq -->
-    <div class="work-card c" data-href="ufuq.html">
+    <div class="work-card c reveal reveal-delay-3" data-href="ufuq.html">
       <img src="images/archstock.png" alt="Architecture Stock" class="stock-img">
       <video class="card-video" autoplay loop muted playsinline preload="auto">
         <source src="videos/ufuqpattern.mp4" type="video/mp4">
@@ -717,14 +919,14 @@
     </div>
 
     <!-- CARD D: Brand Logo (Static) -->
-    <div class="work-card d">
-      <img src="images/logo.svg" alt="Logo Project">
+    <div class="work-card d reveal reveal-delay-1">
+      <img src="images/logo.svg" alt="Logo Project" style="filter: brightness(0) saturate(100%) invert(88%) sepia(48%) saturate(1184%) hue-rotate(28deg) brightness(97%) contrast(90%);">
     </div>
   </div>
 </section>
 
 <!-- FOOTER SECTION -->
-<footer id="contact">
+<footer id="contact" class="reveal">
   <img src="images/logog.svg" alt="" class="footer-bg-logo">
 
   <div class="footer-inner">
@@ -732,7 +934,9 @@
       <p class="name" data-i18n="footer_name">سالم الطرميسي</p>
       <p class="title-text" data-i18n="footer_title">مصمم هويات بصرية</p>
       <p class="links">
-        <a href="https://www.instagram.com/salemtarmissi/" target="_blank" rel="noopener noreferrer">Instagram</a> • <a href="https://www.behance.net/salemtarmissi" target="_blank" rel="noopener noreferrer">Behance</a> • <a href="mailto:octupi.graphics@gmail.com">Email</a>
+        <a href="https://www.instagram.com/salemtarmissi/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.behance.net/salemtarmissi" target="_blank" rel="noopener noreferrer">Behance</a>
+        <a href="mailto:octupi.graphics@gmail.com">Email</a>
       </p>
     </div>
 
@@ -743,18 +947,218 @@
   </div>
 </footer>
 
+<!-- ASCII ENGINE SCRIPT -->
+<script type="module">
+  import { asciifyGif } from 'https://esm.sh/asciify-engine';
+
+  const canvas = document.getElementById('ascii-bg-canvas');
+
+  const settings = {
+    scale: 115,
+    fontSize: 6,
+    spacing: 100,
+    aspect: 48,
+    charset: " =+*#%@",
+    dither: 51,
+    normalize: true,
+    invert: false,
+    colorMode: "accent",
+    accent: "#718201",    
+    bg: "#000000",
+    brightness: 5,
+    contrast: 52,
+    motion: "none",
+    speed: 100,
+    hover: 0,
+    hoverEffect: "spotlight"
+  };
+
+  let stopPlayback = null;
+
+  function loadGifAsArrayBuffer(url) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.responseType = 'arraybuffer';
+      xhr.onload = function() {
+        if (xhr.status === 200 || xhr.status === 0) {
+          resolve(xhr.response);
+        } else {
+          reject(new Error('Failed to load GIF, status: ' + xhr.status));
+        }
+      };
+      xhr.onerror = function() {
+        reject(new Error('Network error loading GIF'));
+      };
+      xhr.send();
+    });
+  }
+
+  async function initBackground() {
+    try {
+      const gifBuffer = await loadGifAsArrayBuffer('images/spinning-logo(2).gif');
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const baseSize = Math.min(window.innerHeight * 1.5, 2000);
+      canvas.width = baseSize * dpr;
+      canvas.height = baseSize * dpr;
+
+      if (stopPlayback) stopPlayback();
+      
+      stopPlayback = await asciifyGif(gifBuffer, canvas, {
+        fontSize: settings.fontSize * dpr,
+        options: {
+          charset: settings.charset,
+          charSpacing: settings.spacing / 100,
+          charAspect: settings.aspect / 100,
+          colorMode: settings.colorMode,
+          accentColor: settings.accent,
+          brightness: settings.brightness / 100,
+          contrast: settings.contrast / 100,
+          ditherStrength: settings.dither / 100,
+          normalize: settings.normalize,
+          invert: settings.invert,
+          animationStyle: settings.motion,
+          animationSpeed: settings.speed / 100,
+          hoverEffect: settings.hoverEffect,
+          hoverStrength: settings.hover / 100
+        }
+      });
+
+      // Trigger fade-in on canvas once loaded
+      setTimeout(() => {
+        canvas.classList.add('loaded');
+      }, 100);
+
+    } catch (err) {
+      console.error('ASCII background error:', err);
+    }
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(initBackground, 300);
+  });
+
+  initBackground();
+</script>
+
 <script>
-  // Page Entry Loader Fade-out (Runs when arriving on any page)
-  window.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener("DOMContentLoaded", function() {
+    /* Smooth Physics Custom Cursor & Hover Scale */
+    const cursor = document.getElementById('cursorDot');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+    const speed = 0.15;
+
+    window.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function updateCursor() {
+      cursorX += (mouseX - cursorX) * speed;
+      cursorY += (mouseY - cursorY) * speed;
+      if (cursor) {
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+      }
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    const clickables = document.querySelectorAll('a, button, .work-card');
+    clickables.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (cursor) cursor.classList.add('hovered');
+      });
+      el.addEventListener('mouseleave', () => {
+        if (cursor) cursor.classList.remove('hovered');
+      });
+    });
+
+    /* Scroll Reveal Intersection Observer */
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    /* Mobile Menu Toggle Logic */
+    const hamburgerTriggers = document.querySelectorAll('.hamburger-trigger');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu() {
+      mobileMenuOverlay.classList.toggle('open');
+      document.body.classList.toggle('menu-open');
+      
+      const isOpen = mobileMenuOverlay.classList.contains('open');
+      hamburgerTriggers.forEach(btn => {
+        if (isOpen) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    hamburgerTriggers.forEach(btn => {
+      btn.addEventListener('click', toggleMenu);
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if(mobileMenuOverlay.classList.contains('open')) {
+          toggleMenu();
+        }
+      });
+    });
+
+    /* Hide Header on Scroll & Show when scrolling back up */
+    const topHeaderBar = document.getElementById('topHeaderBar');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 50 && currentScrollY > lastScrollY && !mobileMenuOverlay.classList.contains('open')) {
+        topHeaderBar.classList.remove('visible');
+      } else if (currentScrollY < lastScrollY && currentScrollY > 50) {
+        topHeaderBar.classList.add('visible');
+      } else if (currentScrollY <= 20) {
+        topHeaderBar.classList.remove('visible');
+      }
+      lastScrollY = currentScrollY;
+    });
+  });
+
+  // Page Entry Loader Extended Delay
+  window.addEventListener('load', function() {
     var loader = document.getElementById('pageLoader');
     if (loader) {
       setTimeout(function() {
         loader.classList.remove('active');
-      }, 50);
+      }, 1500);
     }
   });
 
-  // Intercept Card Links to Trigger 500ms Transition Loader Delay
+  // Intercept Card Links to Trigger Transition Loader Delay
   document.querySelectorAll('[data-href]').forEach(function(card) {
     card.addEventListener('click', function(e) {
       e.preventDefault();
@@ -768,20 +1172,6 @@
       setTimeout(function() {
         window.location.href = targetUrl;
       }, 500);
-    });
-  });
-
-  // Mobile Hamburger Toggle
-  var hamburgerBtn = document.getElementById('hamburgerBtn');
-  var mobileMenu = document.getElementById('mobileMenu');
-
-  hamburgerBtn.addEventListener('click', function() {
-    mobileMenu.classList.toggle('active');
-  });
-
-  document.querySelectorAll('.mobile-link').forEach(function(link) {
-    link.addEventListener('click', function() {
-      mobileMenu.classList.remove('active');
     });
   });
 
@@ -816,7 +1206,7 @@
       nav_work: "أعمالي",
       nav_about: "عني",
       nav_contact: "تواصل",
-      lang_btn: "English",
+      nav_lang: "English",
       hero_line1: "أصمم هويات<br>بصرية",
       hero_line2: "وأحول<br>فكرتك إلى هوية",
       bio_1: "أهلاً، أنا سالم، مصمم هويات بصرية أؤمن أن التصميم مو مجرد شكل جميل، بل فكرة تتحول إلى شيء يُرى ويُتذكر.",
@@ -833,7 +1223,7 @@
       nav_work: "Work",
       nav_about: "About",
       nav_contact: "Contact",
-      lang_btn: "عربي",
+      nav_lang: "عربي",
       hero_line1: "I Design Visual<br>Identities",
       hero_line2: "And Turn Your<br>Idea Into Reality",
       bio_1: "Hello, I'm Salem, a visual identity designer who believes that design isn't just about good looks—it's an idea transformed into something memorable.",
@@ -865,18 +1255,17 @@
         }
       });
 
-      document.querySelectorAll('.lang-toggle').forEach(function(b) {
-        b.textContent = translations[currentLang].lang_btn;
-      });
-
-      mobileMenu.classList.remove('active');
+      var mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+      if (mobileMenuOverlay) {
+        mobileMenuOverlay.classList.remove('open');
+        document.body.classList.remove('menu-open');
+      }
     });
   });
 
-  // Force video playback and tap toggle for touch screens
+  // Force video playback and touch support for portfolio cards
   document.querySelectorAll('.work-card').forEach(function(card) {
     var video = card.querySelector('video');
-    
     if (video) {
       video.play().catch(function(e) {});
     }

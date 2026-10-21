@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salem Tarmissi | Visual Identity Designer</title>
+  
+  <!-- Import IBM Plex Sans from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ccff00; /* Signature neon lime color */
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+      overflow-x: hidden;
+      padding: 35px 0 40px 0;
+    }
+
+    /* Pattern Overlay Background */
+    .pattern-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images/patternback.png');
+      background-repeat: repeat;
+      background-position: center top;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.65;
+    }
+
+    /* Main Container */
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 480px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header Logo */
+    .header-logo {
+      margin-top: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .header-logo a {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .header-logo a:hover {
+      transform: scale(1.05);
+    }
+
+    .header-logo img {
+      max-width: 135px;
+      height: auto;
+      display: block;
+    }
+
+    /* Cards Showcase Area */
+    .cards-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Subtle Floating Keyframe Animations */
+    @keyframes floatBack {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    @keyframes floatFront {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .card {
+      position: absolute;
+      max-width: 290px;
+      width: 80%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.7));
+      transition: filter 0.3s ease;
+    }
+
+    .card-back {
+      z-index: 10;
+      top: 5%;
+      left: 2%;
+      animation: floatBack 5s ease-in-out infinite;
+      animation-delay: 0s;
+    }
+
+    .card-front {
+      z-index: 20;
+      bottom: 8%;
+      right: 2%;
+      animation: floatFront 5s ease-in-out infinite;
+      animation-delay: -2.5s;
+    }
+
+    /* Subtitle Tagline */
+    .tagline {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: #ccff00;
+      text-align: center;
+      margin-bottom: 30px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Links / Buttons Stack */
+    .links-stack {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      border: 3px solid #ccff00;
+      border-radius: 50px;
+      background-color: transparent;
+      color: #ccff00;
+      font-size: 1.6rem;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      box-sizing: border-box;
+      transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Hover & Active / Click States: No glow, extra bold font weight */
+    .btn:hover,
+    .btn:active {
+      background-color: #ccff00;
+      color: #000000;
+      font-weight: 800;
+      transform: translateY(-2px);
+      box-shadow: none;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 400px) {
+      .cards-container {
+        height: 270px;
+      }
+      .btn {
+        font-size: 1.35rem;
+        padding: 14px 18px;
+      }
+      .tagline {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Pattern Layer -->
+  <div class="pattern-overlay"></div>
+
+  <!-- Main Content Container -->
+  <main class="container">
+    
+    <!-- Top Logo Redirecting to Website -->
+    <header class="header-logo">
+      <a href="https://salemtarmissi.com" target="_blank" rel="noopener noreferrer">
+        <img src="images/logotop.png" alt="Salem Tarmissi Logo">
+      </a>
+    </header>
+
+    <!-- Floating Cards Section -->
+    <section class="cards-container">
+      <img src="images/cardback.png" alt="Card Back" class="card card-back">
+      <img src="images/cardfront.png" alt="Card Front" class="card card-front">
+    </section>
+
+    <!-- Tagline -->
+    <p class="tagline">Your Graphic designer awaits</p>
+
+    <!-- Action Links -->
+    <nav class="links-stack">
+      <a href="https://salemtarmissi.com" class="btn" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://www.instagram.com/salemtarmissi/" class="btn" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.behance.net/salemtarmissi" class="btn" target="_blank" rel="noopener noreferrer">Behance</a>
+    </nav>
+
+  </main>
+
+</body>
+</html>
