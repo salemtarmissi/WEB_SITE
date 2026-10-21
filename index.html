@@ -14,6 +14,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Salem Tarmissi</title>
 <link rel="icon" type="image/svg+xml" href="images/Asset 5.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ---------- CUSTOM FONT DECLARATIONS ---------- */
   @font-face {
@@ -23,32 +26,8 @@
     font-style: normal;
   }
   @font-face {
-    font-family: 'Helvetica';
-    src: url('fonts/Helvetica-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Helvetica';
-    src: url('fonts/Helvetica-Oblique.woff2') format('woff2');
-    font-weight: 400;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: 'Helvetica';
-    src: url('fonts/Helvetica-BoldOblique.woff2') format('woff2');
-    font-weight: 700;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: 'Helvetica';
-    src: url('fonts/Helvetica-LightOblique.woff2') format('woff2');
-    font-weight: 300;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: 'Alfont Arabic';
-    src: url('fonts/alfont_com_الف-تيكا-عربي.woff2') format('woff2');
+    font-family: 'Helvetica Arabic';
+    src: url('fonts/Helvetica-arabic.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
   }
@@ -80,19 +59,19 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'Helvetica', 'Alfont Arabic', sans-serif;
+    font-family: 'Helvetica Arabic', 'Helvetica', 'IBM Plex Sans Arabic', sans-serif;
     direction: rtl;
     text-align: right;
     overflow-x: hidden;
     cursor: none !important;
   }
 
-  body a, body button, body .work-card {
+  body a, body button, body .work-card, body input[type="range"] {
     cursor: none !important;
   }
 
   html[lang="en"] body {
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Helvetica', 'Helvetica Arabic', 'IBM Plex Sans Arabic', sans-serif;
   }
 
   html[dir="ltr"] body {
@@ -125,7 +104,7 @@
   .reveal-delay-2 { transition-delay: 0.3s; }
   .reveal-delay-3 { transition-delay: 0.45s; }
 
-  /* ---------- SMOOTH PHYSICS CUSTOM CURSOR ---------- */
+  /* ---------- SMOOTH PHYSICS CUSTOM CURSOR (FROM atyaf.html) ---------- */
   .cursor-dot {
     position: fixed;
     top: 0;
@@ -148,7 +127,7 @@
 
   @media (pointer: coarse) {
     .cursor-dot { display: none; }
-    body, body a, body button, body .work-card { cursor: auto !important; }
+    body, body a, body button, body .work-card, body input[type="range"] { cursor: auto !important; }
   }
 
   /* ---------- TOP FLOATING HEADER BAR (MOBILE ONLY) ---------- */
@@ -536,8 +515,28 @@
     font-weight: 800;
     letter-spacing: -2px;
     margin: 0 0 36px;
-    white-space: nowrap;
     color: var(--ink);
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  /* Smooth stretching expansion styling for the title */
+  .expandable-title .stretchable {
+    display: inline-block;
+    letter-spacing: 0px;
+    transition: letter-spacing 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: letter-spacing;
+  }
+
+  .expandable-title.expanded .stretchable {
+    letter-spacing: 0.35em;
+  }
+
+  @media (max-width: 768px) {
+    .expandable-title.expanded .stretchable {
+      letter-spacing: 0.22em;
+    }
   }
 
   .work-grid {
@@ -925,7 +924,7 @@
 
 <!-- PORTFOLIO SECTION -->
 <section class="portfolio" id="portfolio">
-  <h2 class="reveal" data-i18n="portfolio_title">أعمـالـــــــــــــــي</h2>
+  <h2 class="reveal expandable-title" data-i18n="portfolio_title"><span class="stretchable">أعمالي</span></h2>
   <div class="work-grid">
     
     <!-- CARD A: Rowad -->
@@ -995,7 +994,7 @@
     fontSize: 6,
     spacing: 100,
     aspect: 48,
-    charset: " =+*#%@",
+    charset: " =+*#%",
     dither: 51,
     normalize: true,
     invert: false,
@@ -1082,7 +1081,7 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    /* Smooth Physics Custom Cursor & Hover Scale */
+    /* Smooth Physics Custom Cursor (from atyaf.html) */
     const cursor = document.getElementById('cursorDot');
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
@@ -1106,7 +1105,7 @@
     }
     requestAnimationFrame(updateCursor);
 
-    const clickables = document.querySelectorAll('a, button, .work-card');
+    const clickables = document.querySelectorAll('a, button, .work-card, input[type="range"]');
     clickables.forEach(el => {
       el.addEventListener('mouseenter', () => {
         if (cursor) cursor.classList.add('hovered');
@@ -1135,6 +1134,22 @@
     document.querySelectorAll('.reveal').forEach(el => {
       observer.observe(el);
     });
+
+    /* Expandable Title Observer for Smooth Stretching */
+    const titleObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('expanded');
+        } else {
+          entry.target.classList.remove('expanded');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const expandableTitle = document.querySelector('.expandable-title');
+    if (expandableTitle) {
+      titleObserver.observe(expandableTitle);
+    }
 
     /* Mobile Menu Toggle Logic */
     const hamburgerTriggers = document.querySelectorAll('.hamburger-trigger');
@@ -1249,7 +1264,7 @@
       bio_2: "أركز على بناء الهويات البصرية وتطوير المفاهيم من الفكرة الأولى إلى نظام بصري متكامل، من الشعارات والعناصر البصرية إلى التطبيقات والمحتوى.",
       bio_3: "أحب أن أجد الفكرة التي تجعل العلامة مختلفة، ثم أبني حولها تصميمًا واضحًا، متناسقًا، وله سبب.",
       software_title: "خبرتي في البرامج",
-      portfolio_title: "أعمـالـــــــــــــــي",
+      portfolio_title: '<span class="stretchable">أعمالي</span>',
       footer_name: "سالم الطرميسي",
       footer_title: "مصمم هويات بصرية",
       footer_cta: "هويتك الجديدة<br>بإنتظارك"
